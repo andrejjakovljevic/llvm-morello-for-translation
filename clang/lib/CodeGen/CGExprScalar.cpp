@@ -3406,7 +3406,7 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
 
    // If this isn't sizeof(vla), the result must be constant; use the constant
   // folding logic so we don't have to duplicate it here.
-  auto MD = llvm::MDString::get(CGF.getLLVMContext(), "sizeof " + TypeToSize.getBaseTypeIdentifier()->getName());
+  auto MD = llvm::MDString::get(CGF.getLLVMContext(), "sizeof " + TypeToSize.getBaseTypeIdentifier()->getName().str());
   //llvm::errs() << "wa=" << TypeToSize.getBaseTypeIdentifier()->getName() << "\n";
   llvm::MDNode* MDNode = llvm::MDNode::get(CGF.getLLVMContext(), MD);
   auto val = Builder.getInt(E->EvaluateKnownConstInt(CGF.getContext()));
