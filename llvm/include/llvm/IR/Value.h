@@ -263,6 +263,11 @@ public:
   ValueName *getValueName() const;
   void setValueName(ValueName *VN);
 
+  void addMetadata_public(StringRef Kind, MDNode &MD)
+  {
+    addMetadata(Kind, MD);
+  }
+
 private:
   void destroyValueName();
   enum class ReplaceMetadataUses { No, Yes };

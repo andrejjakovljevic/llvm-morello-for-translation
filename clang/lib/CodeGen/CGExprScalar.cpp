@@ -3404,9 +3404,28 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
     return llvm::ConstantInt::get(CGF.SizeTy, Alignment);
   }
 
-  // If this isn't sizeof(vla), the result must be constant; use the constant
+   // If this isn't sizeof(vla), the result must be constant; use the constant
   // folding logic so we don't have to duplicate it here.
-  return Builder.getInt(E->EvaluateKnownConstInt(CGF.getContext()));
+  auto MD = llvm::MDString::get(CGF.getLLVMContext(), "sizeof "+TypeToSize.getAsString());
+  llvm::MDNode* MDNode = llvm::MDNode::get(CGF.getLLVMContext(), MD);
+  auto val = Builder.getInt(E->EvaluateKnownConstInt(CGF.getContext()));
+  llvm::MetadataAsValue *MetadataValue = llvm::MetadataAsValue::get(CGF.getLLVMContext(), MDNode);
+  llvm::ConstantInt* Zero = llvm::ConstantInt::get(llvm::Type::getInt64Ty(CGF.getLLVMContext()), 0);
+  if (auto const_inst = llvm::dyn_cast<llvm::ConstantInt>(val))
+  {
+    std::vector<llvm::Metadata*> metadata_v;
+    //metadata_v.push_back(MetadataValue->getMetadata());
+    metadata_v.push_back(MDNode);
+    ArrayRef<llvm::Metadata*> arr(metadata_v);
+    auto my_add = Builder.Insert(llvm::BinaryOperator::Create(llvm::Instruction::Add, const_inst,Zero), "");
+    if (auto inst = llvm::dyn_cast<llvm::Instruction>(my_add))
+    {
+      //inst->addAttribute(llvm::AttributeList::FunctionIndex, llvm::Attribute::OptimizeNone);
+      inst->addMetadata_public("sizeof", *llvm::MDNode::get(CGF.getLLVMContext(), arr));
+    }
+    return my_add;
+  }
+  return val;
 }
 
 Value *ScalarExprEmitter::VisitUnaryReal(const UnaryOperator *E) {
