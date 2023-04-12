@@ -3428,8 +3428,8 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
   if (TypeToSize.getBaseTypeIdentifier())
   {
     std::string real_name = TypeToSize.getBaseTypeIdentifier()->getName().str();
-    std::vector<std::string> vecy1 = string_split(real_name," ");
-    std::vector<std::string> vecy2 = string_split(sizeof_typename," ");
+    std::vector<std::string> vecy1 = split_string(real_name," ");
+    std::vector<std::string> vecy2 = split_string(sizeof_typename," ");
     if (vecy1[0]!=vecy2[0])
     {
       vecy2[0]=vecy1[0];
