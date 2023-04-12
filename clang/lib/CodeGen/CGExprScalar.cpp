@@ -3424,7 +3424,6 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
    // If this isn't sizeof(vla), the result must be constant; use the constant
   // folding logic so we don't have to duplicate it here.
   std::string sizeof_typename = TypeToSize.getAsString();
-  llvm::errs() << "sizeof1=" << sizeof_typename << "\n";
   if (TypeToSize.getBaseTypeIdentifier())
   {
     std::string real_name = TypeToSize.getBaseTypeIdentifier()->getName().str();
@@ -3441,7 +3440,6 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
       }
       sizeof_typename = sol; 
     }
-    llvm::errs() << "sizeof2=" << sizeof_typename << "\n";
   }
   auto MD = llvm::MDString::get(CGF.getLLVMContext(), "sizeof " + sizeof_typename);
   //llvm::errs() << "wa=" << TypeToSize.getBaseTypeIdentifier()->getName() << "\n";
