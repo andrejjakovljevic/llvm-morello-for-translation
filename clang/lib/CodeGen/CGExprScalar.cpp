@@ -3367,6 +3367,23 @@ Value *ScalarExprEmitter::VisitOffsetOfExpr(OffsetOfExpr *E) {
   return Result;
 }
 
+std::vector<std::string> split_string(std::string& s, std::string delimiter) 
+{
+  size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+  std::string token;
+  std::vector<std::string> res;
+
+  while ((pos_end = s.find (delimiter, pos_start)) != std::string::npos) 
+  {
+      token = s.substr (pos_start, pos_end - pos_start);
+      pos_start = pos_end + delim_len;
+      res.push_back(token);
+  }
+
+  res.push_back (s.substr(pos_start));
+  return res;
+}
+
 /// VisitUnaryExprOrTypeTraitExpr - Return the size or alignment of the type of
 /// argument of the sizeof expression as an integer.
 Value *
@@ -3410,7 +3427,20 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
   llvm::errs() << "sizeof1=" << sizeof_typename << "\n";
   if (TypeToSize.getBaseTypeIdentifier())
   {
-    sizeof_typename = TypeToSize.getBaseTypeIdentifier()->getName().str();
+    std::string real_name = TypeToSize.getBaseTypeIdentifier()->getName().str();
+    std::vector<std::string> vecy1 = string_split(real_name," ");
+    std::vector<std::string> vecy2 = string_split(sizeof_typename," ");
+    if (vecy1[0]!=vecy2[0])
+    {
+      vecy2[0]=vecy1[0];
+      std::string sol;
+      for (int i=0;i<vecy2.size();i++)
+      {
+        if (i!=0) sol+=" ";
+        sol+=vecy[i];
+      }
+      sizeof_typename = sol; 
+    }
     llvm::errs() << "sizeof2=" << sizeof_typename << "\n";
   }
   auto MD = llvm::MDString::get(CGF.getLLVMContext(), "sizeof " + sizeof_typename);
