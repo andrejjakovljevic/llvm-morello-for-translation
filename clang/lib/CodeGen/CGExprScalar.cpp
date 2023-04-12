@@ -3413,7 +3413,7 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
     sizeof_typename = TypeToSize.getBaseTypeIdentifier()->getName().str();
     llvm::errs() << "sizeof1=" << sizeof_typename << "\n";
   }
-  auto MD = llvm::MDString::get(CGF.getLLVMContext(), "sizeof " + sizeof_typename);
+  auto MD = llvm::MDString::get(CGF.getLLVMContext(), "sizeof2= " + sizeof_typename);
   //llvm::errs() << "wa=" << TypeToSize.getBaseTypeIdentifier()->getName() << "\n";
   llvm::MDNode* MDNode = llvm::MDNode::get(CGF.getLLVMContext(), MD);
   auto val = Builder.getInt(E->EvaluateKnownConstInt(CGF.getContext()));
