@@ -3434,10 +3434,10 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
     {
       vecy2[0]=vecy1[0];
       std::string sol;
-      for (int i=0;i<vecy2.size();i++)
+      for (int i=0;i<(int)vecy2.size();i++)
       {
         if (i!=0) sol+=" ";
-        sol+=vecy[i];
+        sol+=vecy2[i];
       }
       sizeof_typename = sol; 
     }
