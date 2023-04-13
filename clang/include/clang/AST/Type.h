@@ -47,6 +47,7 @@
 #include "llvm/Support/PointerLikeTypeTraits.h"
 #include "llvm/Support/TrailingObjects.h"
 #include "llvm/Support/type_traits.h"
+#include "llvm/Support/Error.h"
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
