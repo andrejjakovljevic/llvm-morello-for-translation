@@ -7819,6 +7819,7 @@ static void HandleVectorSizeAttr(QualType &CurType, const ParsedAttr &Attr,
   }
 
   Expr *SizeExpr = Attr.getArgAsExpr(0);
+  llvm::errs() << "HEEEEEEEEEEEEEEEEEEEE\n";
   QualType T = S.BuildVectorType(CurType, SizeExpr, Attr.getLoc());
   if (!T.isNull())
     CurType = T;
