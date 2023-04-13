@@ -1548,7 +1548,6 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
         allocaTy = ConvertTypeForMem(Ty);
         allocaAlignment = alignment;
       }
-      allocaTy->dump();
       // Create the alloca.  Note that we set the name separately from
       // building the instruction so that it's there even in no-asserts
       // builds.
