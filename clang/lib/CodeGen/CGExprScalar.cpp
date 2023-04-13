@@ -3389,6 +3389,7 @@ std::vector<std::string> split_string(std::string& s, std::string delimiter)
 Value *
 ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
                               const UnaryExprOrTypeTraitExpr *E) {
+  llvm::errs() << "weeeeeeeeeeeeeeeee\n";                              
   QualType TypeToSize = E->getTypeOfArgument();
   if (E->getKind() == UETT_SizeOf) {
     if (const VariableArrayType *VAT =
@@ -3424,7 +3425,6 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
    // If this isn't sizeof(vla), the result must be constant; use the constant
   // folding logic so we don't have to duplicate it here.
   std::string sizeof_typename = TypeToSize.getAsString();
-  llvm::errs() << "here?\n";
   if (TypeToSize.getBaseTypeIdentifier())
   {
     std::string real_name = TypeToSize.getBaseTypeIdentifier()->getName().str();
