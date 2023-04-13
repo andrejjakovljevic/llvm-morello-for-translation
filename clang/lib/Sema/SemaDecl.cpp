@@ -2349,7 +2349,6 @@ void Sema::MergeTypedefNameDecl(Scope *S, TypedefNameDecl *New,
     return New->setInvalidDecl();
 
   if (auto *OldTD = dyn_cast<TypedefNameDecl>(Old)) {
-    llvm::errs() << "MERGE\n";
     auto *OldTag = OldTD->getAnonDeclWithTypedefName(/*AnyRedecl*/true);
     auto *NewTag = New->getAnonDeclWithTypedefName();
     NamedDecl *Hidden = nullptr;
