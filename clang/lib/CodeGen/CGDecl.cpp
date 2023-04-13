@@ -1465,9 +1465,11 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
 
   bool NRVO = getLangOpts().ElideConstructors && D.isNRVOVariable();
 
+  llvm::errs() << "here\n";
   if (getLangOpts().OpenMP && OpenMPLocalAddr.isValid()) {
     address = OpenMPLocalAddr;
   } else if (Ty->isConstantSizeType()) {
+    llvm::errs() << "there\n";
     // If this value is an array or struct with a statically determinable
     // constant initializer, there are optimizations we can do.
     //
