@@ -5822,7 +5822,6 @@ QualType ASTContext::getUnsignedWCharType() const {
 }
 
 QualType ASTContext::getIntPtrType() const {
-  llvm::errs() << "hereee\n";
   return getFromTargetType(Target->getIntPtrType());
 }
 
