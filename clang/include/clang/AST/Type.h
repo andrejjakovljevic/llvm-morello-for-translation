@@ -6659,6 +6659,9 @@ inline unsigned QualType::getCVRQualifiers() const {
 
 inline QualType QualType::getCanonicalType() const {
   QualType canon = getCommonPtr()->CanonicalType;
+  llvm::errs() << "looking for canonical types\n";
+  llvm::errs() << "name=" << getAsString() << "\n";
+  llvm::errs() << "looking for canonical types\n";
   return canon.withFastQualifiers(getLocalFastQualifiers());
 }
 
