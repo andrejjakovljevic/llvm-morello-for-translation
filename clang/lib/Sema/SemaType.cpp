@@ -2609,6 +2609,7 @@ QualType Sema::BuildVectorType(QualType CurType, Expr *SizeExpr,
                                SourceLocation AttrLoc) {
   // The base type must be integer (not Boolean or enumeration) or float, and
   // can't already be a vector.
+  llvm::errs() << "weeeeeeeee?\n";
   if ((!CurType->isDependentType() &&
        (!CurType->isBuiltinType() || CurType->isBooleanType() ||
         (!CurType->isIntegerType() && !CurType->isRealFloatingType()))) ||

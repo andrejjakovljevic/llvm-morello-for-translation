@@ -498,7 +498,6 @@ public:
   }
 
   Value *VisitSizeOfPackExpr(SizeOfPackExpr *E) {
-    llvm::errs() << "jjjjjjj\n";
     return llvm::ConstantInt::get(ConvertType(E->getType()),E->getPackLength());
   }
 
