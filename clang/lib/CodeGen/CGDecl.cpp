@@ -1433,7 +1433,7 @@ void CodeGenFunction::EmitAndRegisterVariableArrayDimensions(
 CodeGenFunction::AutoVarEmission
 CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
   QualType Ty = D.getType();
-  errs() << "name_of_alloca=" << Ty.getAsString() << "\n";
+  llvm::errs() << "name_of_alloca=" << Ty.getAsString() << "\n";
   assert(
       Ty.getAddressSpace() == LangAS::Default ||
       (Ty.getAddressSpace() == LangAS::opencl_private && getLangOpts().OpenCL));
