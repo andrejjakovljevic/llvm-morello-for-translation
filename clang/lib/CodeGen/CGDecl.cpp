@@ -1535,6 +1535,7 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
         }
       }
     } else {
+      llvm::errs() << "woooooooooooooooooooooo\n";
       CharUnits allocaAlignment;
       llvm::Type *allocaTy;
       if (isEscapingByRef) {

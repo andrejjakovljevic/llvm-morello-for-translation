@@ -89,7 +89,6 @@ void CodeGenTypes::addRecordTypeName(const RecordDecl *RD,
 /// memory representation is usually i8 or i32, depending on the target.
 llvm::Type *CodeGenTypes::ConvertTypeForMem(QualType T, bool ForBitField) {
   if (T->isConstantMatrixType()) {
-    llvm::errs() << "AM I HERE?\n";
     const Type *Ty = Context.getCanonicalType(T).getTypePtr();
     const ConstantMatrixType *MT = cast<ConstantMatrixType>(Ty);
     return llvm::ArrayType::get(ConvertType(MT->getElementType()),
