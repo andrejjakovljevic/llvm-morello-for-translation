@@ -19,7 +19,6 @@
 #include "clang/AST/DeclObjC.h"
 #include "clang/AST/DeclTemplate.h"
 #include "clang/AST/Expr.h"
-#include "clang/AST/Type.h"
 #include "clang/AST/TypeLoc.h"
 #include "clang/AST/TypeLocVisitor.h"
 #include "clang/Basic/PartialDiagnostic.h"
@@ -2610,7 +2609,6 @@ QualType Sema::BuildVectorType(QualType CurType, Expr *SizeExpr,
                                SourceLocation AttrLoc) {
   // The base type must be integer (not Boolean or enumeration) or float, and
   // can't already be a vector.
-  llvm::errs() << "weeeeeeeee?\n";
   if ((!CurType->isDependentType() &&
        (!CurType->isBuiltinType() || CurType->isBooleanType() ||
         (!CurType->isIntegerType() && !CurType->isRealFloatingType()))) ||
@@ -7820,9 +7818,6 @@ static void HandleVectorSizeAttr(QualType &CurType, const ParsedAttr &Attr,
   }
 
   Expr *SizeExpr = Attr.getArgAsExpr(0);
-  llvm::errs() << "HEEEEEEEEEEEEEEEEEEEE\n";
-  QualType qt = SizeExpr->getType();
-  llvm::errs() << "name=" << qt.getAsString() << "\n";
   QualType T = S.BuildVectorType(CurType, SizeExpr, Attr.getLoc());
   if (!T.isNull())
     CurType = T;
