@@ -1539,10 +1539,12 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
       CharUnits allocaAlignment;
       llvm::Type *allocaTy;
       if (isEscapingByRef) {
+        llvm::errs() << "hmmmmmmmmmmmmmmmmmmmm\n";
         auto &byrefInfo = getBlockByrefInfo(&D);
         allocaTy = byrefInfo.Type;
         allocaAlignment = byrefInfo.ByrefAlignment;
       } else {
+        llvm::errs() << "fffffffffffffffffffff\n";
         allocaTy = ConvertTypeForMem(Ty);
         allocaAlignment = alignment;
       }
