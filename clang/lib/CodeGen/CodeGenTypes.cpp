@@ -105,6 +105,8 @@ llvm::Type *CodeGenTypes::ConvertTypeForMem(QualType T, bool ForBitField) {
                                   (unsigned)Context.getTypeSize(T));
 
   llvm::errs() << "Now\n";
+  llvm::errs() << "name=" << T.getAsString() << "\n";
+  llvm::errs() << "Now\n";
   // Else, don't map it.
   return R;
 }
