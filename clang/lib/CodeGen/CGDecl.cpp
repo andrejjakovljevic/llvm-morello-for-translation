@@ -1432,6 +1432,7 @@ void CodeGenFunction::EmitAndRegisterVariableArrayDimensions(
 /// local variable.  Does not emit initialization or destruction.
 CodeGenFunction::AutoVarEmission
 CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
+  bool is_ptr = false;
   QualType Ty = D.getType();
   llvm::errs() << Ty.getAsString() << "\n";
   assert(
@@ -1652,7 +1653,7 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
 
   llvm::errs() << "end of emission\n";
   // Add metadata for sizeof
-  Type AllocaTy = getTypes().ConvertTypeForMem(D.getType());
+  llvm::Type* AllocaTy = getTypes().ConvertTypeForMem(D.getType());
   llvm::AllocaInst *Alloc =
     CreateTempAlloca(AllocaTy, D.getNameAsString());
   return emission;
