@@ -403,10 +403,9 @@ llvm::Type *CodeGenTypes::ConvertType(QualType T) {
   }
   T = Context.getCanonicalType(T);
   const Type *Ty = T.getTypePtr();
-
+  llvm::errs() << "new_name=" << T.getAsString() << "\n";
   if (is_int_ptr)
   {
-    Ty->addAttr(clang::NonNullAttr::CreateImplicit(Context)); 
   }
   // For the device-side compilation, CUDA device builtin surface/texture types
   // may be represented in different types.
