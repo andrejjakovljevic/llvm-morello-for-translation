@@ -866,6 +866,9 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
         llvm::MDNode *Op = Flags->getOperand(i);
         if (Op->getNumOperands() >= 1) {
           llvm::MDString *Name = llvm::dyn_cast<llvm::MDString>(Op->getOperand(0));
+          llvm::errs() << "ttttttt\n";
+          llvm::errs() << "flaaaags=" << Name << "\n";
+          llvm::errs() << "ttttttt\n";
           if (Name && Name->getString() == RD->getNameAsString()) {
             flagExists = true;
             break;
