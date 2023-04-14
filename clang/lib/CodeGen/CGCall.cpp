@@ -1591,7 +1591,7 @@ llvm::FunctionType *CodeGenTypes::GetFunctionType(GlobalDecl GD) {
 
 llvm::FunctionType *
 CodeGenTypes::GetFunctionType(const CGFunctionInfo &FI) {
-
+  llvm::errs() << "AM I DOING THIS?\n";
   bool Inserted = FunctionsBeingProcessed.insert(&FI).second;
   (void)Inserted;
   assert(Inserted && "Recursively being processed?");
