@@ -1466,11 +1466,9 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
 
   bool NRVO = getLangOpts().ElideConstructors && D.isNRVOVariable();
 
-  llvm::errs() << "here\n";
   if (getLangOpts().OpenMP && OpenMPLocalAddr.isValid()) {
     address = OpenMPLocalAddr;
   } else if (Ty->isConstantSizeType()) {
-    llvm::errs() << "there\n";
     // If this value is an array or struct with a statically determinable
     // constant initializer, there are optimizations we can do.
     //
@@ -1656,15 +1654,12 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
   // Add metadata for sizeof
   if (is_ptr)
   {
-    llvm::Type* AllocaTy = getTypes().ConvertTypeForMem(D.getType());
-    llvm::AllocaInst *Alloc =
-      CreateTempAlloca(AllocaTy, D.getNameAsString());
     auto MD = llvm::MDString::get(getLLVMContext(), "intptr_t");
     llvm::MDNode* MDNode = llvm::MDNode::get(getLLVMContext(), MD);
     std::vector<llvm::Metadata*> metadata_v;
     metadata_v.push_back(MDNode);
     ArrayRef<llvm::Metadata*> arr(metadata_v);
-    Alloc->addMetadata_public("sizeof", *llvm::MDNode::get(getLLVMContext(), arr));
+    address->addMetadata_public("sizeof", *llvm::MDNode::get(getLLVMContext(), arr));
   }
   return emission;
 }
