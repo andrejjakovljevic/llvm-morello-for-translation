@@ -405,6 +405,8 @@ llvm::Type* CodeGenTypes::ConvertTypeHelper(QualType T, bool& is_ptr)
 llvm::Type *CodeGenTypes::ConvertType(QualType T) {
   llvm::errs() << "weeeeeeeeee\n";
   llvm::errs() << "all_names=" << T.getAsString() << "\n";
+  llvm::errs() << "type=" << cast<BuiltinType>(T.getTypePtr())->getTypeClass() << "\n";
+  llvm::errs() << "weeeeeeeeee\n";
   if (cast<BuiltinType>(T.getTypePtr())->getKind()==Type::FunctionProto)
   {
     llvm::errs() << "weeeeeeeeee\n";
@@ -412,8 +414,6 @@ llvm::Type *CodeGenTypes::ConvertType(QualType T) {
     llvm::errs() << "weeeeeeeeee\n";
   }
   T = Context.getCanonicalType(T);
-  llvm::errs() << "type=" << cast<BuiltinType>(T.getTypePtr())->getKind() << "\n";
-  llvm::errs() << "weeeeeeeeee\n";
   const Type *Ty = T.getTypePtr();
   // For the device-side compilation, CUDA device builtin surface/texture types
   // may be represented in different types.
