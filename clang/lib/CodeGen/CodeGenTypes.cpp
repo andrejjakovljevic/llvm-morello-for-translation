@@ -851,13 +851,24 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
   const Type *Key = Context.getTagDeclType(RD).getTypePtr();
   llvm::errs() << "---------------------------------\n";
   llvm::errs() << "name=" << RD->getNameAsString() << "\n";
+  llvm::Module &M = CGM.getModule();
+  std::vector<llvm::Metadata*> metadata_v;
+  int cnt = 0;
   for (const auto &FD : RD->fields()) 
   {
     QualType qt = FD->getType();
     std::string fieldName = qt.getAsString();
     llvm::errs() << "Field Name: " << fieldName << "\n";
+    auto MD = llvm::MDString::get(getLLVMContext(), std::to_string(cnt));
+    llvm::MDNode* MDNode = llvm::MDNode::get(getLLVMContext(), MD);
+    metadata_v.push_back(MDNode);
+    cnt++;
   }
-  llvm::Module &M = CGM.getModule();
+  if (metadata_v.size()!=0)
+  {
+    ArrayRef<llvm::Metadata*> arr(metadata_v);
+    address.getPointer()->addMetadata_public("sizeof", *llvm::MDNode::get(getLLVMContext(), arr));
+  }
   llvm::errs() << "---------------------------------\n";
   llvm::StructType *&Entry = RecordDeclTypes[Key];
 
