@@ -1652,13 +1652,14 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
 
   llvm::errs() << "end of emission\n";
   // Add metadata for sizeof
-  if (is_ptr && address)
+  if (is_ptr)
   {
     auto MD = llvm::MDString::get(getLLVMContext(), "intptr_t");
     llvm::MDNode* MDNode = llvm::MDNode::get(getLLVMContext(), MD);
     std::vector<llvm::Metadata*> metadata_v;
     metadata_v.push_back(MDNode);
     ArrayRef<llvm::Metadata*> arr(metadata_v);
+    auto inst = llvm::dyn_cast<Instruction>(address);
     address->addMetadata_public("sizeof", *llvm::MDNode::get(getLLVMContext(), arr));
   }
   return emission;
