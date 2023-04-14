@@ -396,10 +396,18 @@ llvm::Type *CodeGenTypes::ConvertFunctionTypeInternal(QualType QFT) {
 
 /// ConvertType - Convert the specified type to its LLVM form.
 llvm::Type *CodeGenTypes::ConvertType(QualType T) {
+  bool is_int_ptr = false;
+  if (T.getAsString()=="uintptr_t")
+  {
+    is_int_ptr=true;
+  }
   T = Context.getCanonicalType(T);
-
   const Type *Ty = T.getTypePtr();
 
+  if (is_int_ptr)
+  {
+    Ty->addAttr(clang::NonNullAttr::CreateImplicit(Context)); 
+  }
   // For the device-side compilation, CUDA device builtin surface/texture types
   // may be represented in different types.
   if (Context.getLangOpts().CUDAIsDevice) {
