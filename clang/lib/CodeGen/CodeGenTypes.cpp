@@ -345,19 +345,19 @@ llvm::Type *CodeGenTypes::ConvertFunctionTypeInternal(QualType QFT) {
 
     SkippedLayout = true;
 
-    if (const FunctionProtoType *FPT = dyn_cast<FunctionProtoType>(FT))
-    {
-      for (unsigned i = 0, e = FPT->getNumParams(); i != e; i++)
-      {
-        llvm::errs() << "field=" << FPT->getParamType(i).getAsString() << "\n";
-      }
-    }
-
-    llvm::errs() << "IS_FUNCTION\n";
     // Return a placeholder type.
     return llvm::StructType::get(getLLVMContext());
   }
 
+  if (const FunctionProtoType *FPT = dyn_cast<FunctionProtoType>(FT))
+  {
+    for (unsigned i = 0, e = FPT->getNumParams(); i != e; i++)
+    {
+      llvm::errs() << "field=" << FPT->getParamType(i).getAsString() << "\n";
+    }
+  }
+
+  llvm::errs() << "IS_FUNCTION\n";
   // While we're converting the parameter types for a function, we don't want
   // to recursively convert any pointed-to structs.  Converting directly-used
   // structs is ok though.
