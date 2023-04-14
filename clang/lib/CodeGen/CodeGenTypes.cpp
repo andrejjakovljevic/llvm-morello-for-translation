@@ -402,11 +402,7 @@ llvm::Type* CodeGenTypes::ConvertTypeHelper(QualType T, bool& is_ptr)
 
 /// ConvertType - Convert the specified type to its LLVM form.
 llvm::Type *CodeGenTypes::ConvertType(QualType T) {
-  llvm::errs() << "#############################################\n";
-  llvm::errs() << "first=" << T.getAsString() << "\n";
   T = Context.getCanonicalType(T);
-  llvm::errs() << "second=" << T.getAsString() << "\n";
-  llvm::errs() << "#############################################\n";
   const Type *Ty = T.getTypePtr();
   // For the device-side compilation, CUDA device builtin surface/texture types
   // may be represented in different types.
