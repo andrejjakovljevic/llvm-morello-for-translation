@@ -867,7 +867,7 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
   if (metadata_v.size()!=0)
   {
     ArrayRef<llvm::Metadata*> arr(metadata_v);
-    address.getPointer()->addMetadata_public("sizeof", *llvm::MDNode::get(getLLVMContext(), arr));
+    M.addMetadata_public("sizeof", *llvm::MDNode::get(getLLVMContext(), arr));
   }
   llvm::errs() << "---------------------------------\n";
   llvm::StructType *&Entry = RecordDeclTypes[Key];
