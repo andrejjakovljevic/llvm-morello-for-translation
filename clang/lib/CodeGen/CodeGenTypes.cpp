@@ -859,7 +859,20 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
     QualType qt = FD->getType();
     std::string fieldName = qt.getAsString();
     llvm::errs() << "Field Name: " << fieldName << "\n";
-    if (fieldName=="uintptr_t" || fieldName=="intptr_t")
+    llvm::NamedMDNode *Flags = M->getModuleFlagsMetadata();
+    if (Flags) {
+      for (unsigned i = 0, e = Flags->getNumOperands(); i != e; ++i) {
+        llvm::MDNode *Op = Flags->getOperand(i);
+        if (Op->getNumOperands() >= 1) {
+          llvm::MDString *Name = llvm::dyn_cast<llvm::MDString>(Op->getOperand(0));
+          if (Name && Name->getString() == RD->getNameAsString()) {
+            flagExists = true;
+            break;
+          }
+        }
+      }
+    }
+    if (!flagExists && fieldName=="uintptr_t" || fieldName=="intptr_t")
     {
       M.addModuleFlag(llvm::Module::Error, RD->getNameAsString(), uint32_t(cnt));
     }
