@@ -3007,7 +3007,7 @@ ASTContext::getExtQualType(const Type *baseType, Qualifiers quals) const {
     SplitQualType canonSplit = baseType->getCanonicalTypeInternal().split();
     canonSplit.Quals.addConsistentQualifiers(quals);
     canon = getExtQualType(canonSplit.Ty, canonSplit.Quals);
-
+    llvm::errs() << "canon=" << canon.getAsString() << "\n";
     // Re-find the insert position.
     (void) ExtQualNodes.FindNodeOrInsertPos(ID, insertPos);
   }
