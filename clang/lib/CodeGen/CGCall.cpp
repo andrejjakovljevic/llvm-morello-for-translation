@@ -1729,9 +1729,6 @@ CodeGenTypes::GetFunctionType(const CGFunctionInfo &FI) {
 llvm::Type *CodeGenTypes::GetFunctionTypeForVTable(GlobalDecl GD) {
   const CXXMethodDecl *MD = cast<CXXMethodDecl>(GD.getDecl());
   const FunctionProtoType *FPT = MD->getType()->getAs<FunctionProtoType>();
-  llvm::errs() << "heeeere?\n";
-  llvm::errs() << "name=" << MD->getName() << "\n";
-  llvm::errs() << "heeeere?\n";
   if (!isFuncTypeConvertible(FPT))
     return llvm::StructType::get(getLLVMContext());
   return GetFunctionType(GD);

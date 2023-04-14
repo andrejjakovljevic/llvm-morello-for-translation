@@ -321,6 +321,9 @@ static llvm::Type *getTypeForFormat(llvm::LLVMContext &VMContext,
 }
 
 llvm::Type *CodeGenTypes::ConvertFunctionTypeInternal(QualType QFT) {
+  llvm::errs() << "hm?\n";
+  llvm::errs() << "fun_name=" << QFT.getAsString() << "\n";
+  llvm::errs() << "hm?\n";
   assert(QFT.isCanonical());
   const Type *Ty = QFT.getTypePtr();
   const FunctionType *FT = cast<FunctionType>(QFT.getTypePtr());
