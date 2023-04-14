@@ -865,7 +865,7 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
       for (unsigned i = 0, e = Flags->getNumOperands(); i != e; ++i) {
         llvm::MDNode *Op = Flags->getOperand(i);
         if (Op->getNumOperands() >= 1) {
-          llvm::MDString *Name = llvm::dyn_cast<llvm::MDString>(Op->getOperand(0));
+          llvm::MDString *Name = llvm::dyn_cast<llvm::MDString>(Op->getOperand(1));
           llvm::errs() << "ttttttt\n";
           llvm::errs() << "flaaaags=" << Name << "\n";
           llvm::errs() << "ttttttt\n";
