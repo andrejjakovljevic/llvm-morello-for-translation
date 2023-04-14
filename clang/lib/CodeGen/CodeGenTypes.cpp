@@ -854,12 +854,13 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
   llvm::Module &M = CGM.getModule();
   std::vector<llvm::Metadata*> metadata_v;
   int cnt = 0;
+  bool flagExists=false;
   for (const auto &FD : RD->fields()) 
   {
     QualType qt = FD->getType();
     std::string fieldName = qt.getAsString();
     llvm::errs() << "Field Name: " << fieldName << "\n";
-    llvm::NamedMDNode *Flags = M->getModuleFlagsMetadata();
+    llvm::NamedMDNode *Flags = M.getModuleFlagsMetadata();
     if (Flags) {
       for (unsigned i = 0, e = Flags->getNumOperands(); i != e; ++i) {
         llvm::MDNode *Op = Flags->getOperand(i);
