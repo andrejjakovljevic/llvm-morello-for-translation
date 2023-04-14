@@ -1733,7 +1733,7 @@ llvm::Type *CodeGenTypes::GetFunctionTypeForVTable(GlobalDecl GD) {
   if (!isFuncTypeConvertible(FPT))
     return llvm::StructType::get(getLLVMContext());
   llvm::errs() << "heeeere?\n";
-  llvm::errs() << "name=" << MD->getDeclName()->getName() << "\n";
+  llvm::errs() << "name=" << MD->getName() << "\n";
   llvm::errs() << "heeeere?\n";
   return GetFunctionType(GD);
 }
