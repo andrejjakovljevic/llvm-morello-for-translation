@@ -324,7 +324,6 @@ llvm::Type *CodeGenTypes::ConvertFunctionTypeInternal(QualType QFT) {
   assert(QFT.isCanonical());
   llvm::errs() << "IS_FUNCTION\n";
   llvm::errs() << "is_fun_name=" << QFT.getAsString() << "\n";
-  llvm::errs() << "IS_FUNCTION\n";
   const Type *Ty = QFT.getTypePtr();
   const FunctionType *FT = cast<FunctionType>(QFT.getTypePtr());
   // First, check whether we can build the full function type.  If the
@@ -339,11 +338,15 @@ llvm::Type *CodeGenTypes::ConvertFunctionTypeInternal(QualType QFT) {
       ConvertRecordDeclType(RT->getDecl());
     if (const FunctionProtoType *FPT = dyn_cast<FunctionProtoType>(FT))
       for (unsigned i = 0, e = FPT->getNumParams(); i != e; i++)
+      {
+        llvm::errs() << "field=" << FPT->getParamType(i).getAsString() << "\n";
         if (const RecordType *RT = FPT->getParamType(i)->getAs<RecordType>())
           ConvertRecordDeclType(RT->getDecl());
+      }
 
     SkippedLayout = true;
 
+    llvm::errs() << "IS_FUNCTION\n";
     // Return a placeholder type.
     return llvm::StructType::get(getLLVMContext());
   }
@@ -852,8 +855,6 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
   // TagDecl's are not necessarily unique, instead use the (clang)
   // type connected to the decl.
   const Type *Key = Context.getTagDeclType(RD).getTypePtr();
-  llvm::errs() << "---------------------------------\n";
-  llvm::errs() << "name=" << RD->getNameAsString() << "\n";
   llvm::Module &M = CGM.getModule();
   std::vector<llvm::Metadata*> metadata_v;
   int cnt = 0;
@@ -862,7 +863,6 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
   {
     QualType qt = FD->getType();
     std::string fieldName = qt.getAsString();
-    llvm::errs() << "Field Name: " << fieldName << "\n";
     llvm::NamedMDNode *Flags = M.getModuleFlagsMetadata();
     if (Flags) {
       for (unsigned i = 0, e = Flags->getNumOperands(); i != e; ++i) {
@@ -882,7 +882,6 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
     }
     cnt++;
   }
-  llvm::errs() << "---------------------------------\n";
   llvm::StructType *&Entry = RecordDeclTypes[Key];
 
   // If we don't have a StructType at all yet, create the forward declaration.
