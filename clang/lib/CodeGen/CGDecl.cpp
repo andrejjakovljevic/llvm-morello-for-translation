@@ -1650,6 +1650,7 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
                                          emission.getOriginalAllocatedAddress(),
                                          emission.getSizeForLifetimeMarkers());
 
+  llvm::errs() << "end of emission\n";
   return emission;
 }
 
