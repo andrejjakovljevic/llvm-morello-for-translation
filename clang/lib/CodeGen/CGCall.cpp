@@ -1591,7 +1591,6 @@ llvm::FunctionType *CodeGenTypes::GetFunctionType(GlobalDecl GD) {
 
 llvm::FunctionType *
 CodeGenTypes::GetFunctionType(const CGFunctionInfo &FI) {
-  llvm::errs() << "AM I DOING THIS?\n";
   bool Inserted = FunctionsBeingProcessed.insert(&FI).second;
   (void)Inserted;
   assert(Inserted && "Recursively being processed?");
@@ -1728,6 +1727,7 @@ CodeGenTypes::GetFunctionType(const CGFunctionInfo &FI) {
 
 llvm::Type *CodeGenTypes::GetFunctionTypeForVTable(GlobalDecl GD) {
   const CXXMethodDecl *MD = cast<CXXMethodDecl>(GD.getDecl());
+  llvm::errs() << "AM I DOING THIS?\n";
   const FunctionProtoType *FPT = MD->getType()->getAs<FunctionProtoType>();
   if (!isFuncTypeConvertible(FPT))
     return llvm::StructType::get(getLLVMContext());
