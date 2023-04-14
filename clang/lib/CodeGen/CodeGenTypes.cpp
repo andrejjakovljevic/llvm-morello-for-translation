@@ -339,12 +339,19 @@ llvm::Type *CodeGenTypes::ConvertFunctionTypeInternal(QualType QFT) {
     if (const FunctionProtoType *FPT = dyn_cast<FunctionProtoType>(FT))
       for (unsigned i = 0, e = FPT->getNumParams(); i != e; i++)
       {
-        llvm::errs() << "field=" << FPT->getParamType(i).getAsString() << "\n";
         if (const RecordType *RT = FPT->getParamType(i)->getAs<RecordType>())
           ConvertRecordDeclType(RT->getDecl());
       }
 
     SkippedLayout = true;
+
+    if (const FunctionProtoType *FPT = dyn_cast<FunctionProtoType>(FT))
+    {
+      for (unsigned i = 0, e = FPT->getNumParams(); i != e; i++)
+      {
+        llvm::errs() << "field=" << FPT->getParamType(i).getAsString() << "\n";
+      }
+    }
 
     llvm::errs() << "IS_FUNCTION\n";
     // Return a placeholder type.

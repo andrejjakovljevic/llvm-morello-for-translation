@@ -1434,7 +1434,6 @@ CodeGenFunction::AutoVarEmission
 CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
   bool is_ptr = false;
   QualType Ty = D.getType();
-  llvm::errs() << Ty.getAsString() << "\n";
   assert(
       Ty.getAddressSpace() == LangAS::Default ||
       (Ty.getAddressSpace() == LangAS::opencl_private && getLangOpts().OpenCL));
