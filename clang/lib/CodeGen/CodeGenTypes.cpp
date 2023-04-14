@@ -402,7 +402,11 @@ llvm::Type* CodeGenTypes::ConvertTypeHelper(QualType T, bool& is_ptr)
 
 /// ConvertType - Convert the specified type to its LLVM form.
 llvm::Type *CodeGenTypes::ConvertType(QualType T) {
+  llvm::ers() << "#############################################\n";
+  llvm::errs() << "first=" << T.getAsString() << "\n";
   T = Context.getCanonicalType(T);
+  llvm::errs() << "second=" << T.getAsString() << "\n";
+  llvm::ers() << "#############################################\n";
   const Type *Ty = T.getTypePtr();
   // For the device-side compilation, CUDA device builtin surface/texture types
   // may be represented in different types.
@@ -857,6 +861,7 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
     std::string fieldName = qt.getAsString();
     llvm::errs() << "Field Name: " << fieldName << "\n";
   }
+  llvm::Module &M = CGM.getModule();
   llvm::errs() << "---------------------------------\n";
   llvm::StructType *&Entry = RecordDeclTypes[Key];
 
