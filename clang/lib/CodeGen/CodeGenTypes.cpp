@@ -849,7 +849,9 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
   // TagDecl's are not necessarily unique, instead use the (clang)
   // type connected to the decl.
   const Type *Key = Context.getTagDeclType(RD).getTypePtr();
-
+  llvm::errs() << "---------------------------------\n";
+  llvm::errs() << "name=" << RD->getNameAsString() << "\n";
+  llvm::errs() << "---------------------------------\n";
   llvm::StructType *&Entry = RecordDeclTypes[Key];
 
   // If we don't have a StructType at all yet, create the forward declaration.

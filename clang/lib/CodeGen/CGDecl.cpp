@@ -1534,16 +1534,13 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
         }
       }
     } else {
-      llvm::errs() << "woooooooooooooooooooooo\n";
       CharUnits allocaAlignment;
       llvm::Type *allocaTy;
       if (isEscapingByRef) {
-        llvm::errs() << "hmmmmmmmmmmmmmmmmmmmm\n";
         auto &byrefInfo = getBlockByrefInfo(&D);
         allocaTy = byrefInfo.Type;
         allocaAlignment = byrefInfo.ByrefAlignment;
       } else {
-        llvm::errs() << "fffffffffffffffffffff\n";
         allocaTy = ConvertTypeForMemHelper(Ty, is_ptr);
         //allocaTy = ConvertTypeForMem(Ty);
         allocaAlignment = alignment;
@@ -1650,7 +1647,6 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
                                          emission.getOriginalAllocatedAddress(),
                                          emission.getSizeForLifetimeMarkers());
 
-  llvm::errs() << "end of emission\n";
   // Add metadata for sizeof
   if (is_ptr && address.getPointer())
   {
