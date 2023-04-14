@@ -401,7 +401,7 @@ llvm::Type* CodeGenTypes::ConvertTypeHelper(QualType T, bool& is_ptr)
   {
     is_ptr=true;
   }
-  Type* new_type = ConvertType(T);
+  llvm::Type* new_type = ConvertType(T);
   return new_type;
 }
 
