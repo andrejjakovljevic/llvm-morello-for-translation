@@ -851,6 +851,11 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
   const Type *Key = Context.getTagDeclType(RD).getTypePtr();
   llvm::errs() << "---------------------------------\n";
   llvm::errs() << "name=" << RD->getNameAsString() << "\n";
+  for (const auto &FD : RD->fields()) 
+  {
+    std::string fieldName = FD->getNameAsString();
+    llvm::errs() << "Field Name: " << fieldName << "\n";
+  }
   llvm::errs() << "---------------------------------\n";
   llvm::StructType *&Entry = RecordDeclTypes[Key];
 
