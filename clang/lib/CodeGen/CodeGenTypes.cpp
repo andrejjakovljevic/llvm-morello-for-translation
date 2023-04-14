@@ -749,6 +749,7 @@ llvm::Type *CodeGenTypes::ConvertType(QualType T) {
   }
   case Type::FunctionNoProto:
   case Type::FunctionProto:
+    llvm::errs() << "Entering HERE\n";
     ResultType = ConvertFunctionTypeInternal(T);
     break;
   case Type::ObjCObject:
