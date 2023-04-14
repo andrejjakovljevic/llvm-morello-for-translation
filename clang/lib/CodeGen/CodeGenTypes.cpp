@@ -859,15 +859,11 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
     QualType qt = FD->getType();
     std::string fieldName = qt.getAsString();
     llvm::errs() << "Field Name: " << fieldName << "\n";
-    auto MD = llvm::MDString::get(getLLVMContext(), std::to_string(cnt));
-    llvm::MDNode* MDNode = llvm::MDNode::get(getLLVMContext(), MD);
-    metadata_v.push_back(MDNode);
+    if (fieldName=="uintptr_t" || fieldName=="intptr_t")
+    {
+      M.addModuleFlag(Module::Error, RD->getNameAsString(), uint32_t(cnt));
+    }
     cnt++;
-  }
-  if (metadata_v.size()!=0)
-  {
-    ArrayRef<llvm::Metadata*> arr(metadata_v);
-    M.addMetadata_public("sizeof", *llvm::MDNode::get(getLLVMContext(), arr));
   }
   llvm::errs() << "---------------------------------\n";
   llvm::StructType *&Entry = RecordDeclTypes[Key];
