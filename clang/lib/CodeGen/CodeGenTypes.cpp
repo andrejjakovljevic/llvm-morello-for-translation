@@ -322,18 +322,8 @@ static llvm::Type *getTypeForFormat(llvm::LLVMContext &VMContext,
 
 llvm::Type *CodeGenTypes::ConvertFunctionTypeInternal(QualType QFT) {
   assert(QFT.isCanonical());
-  llvm::errs() << "IS_FUNCTION\n";
-  llvm::errs() << "is_fun_name=" << QFT.getAsString() << "\n";
   const Type *Ty = QFT.getTypePtr();
   const FunctionType *FT = cast<FunctionType>(QFT.getTypePtr());
-  if (const FunctionProtoType *FPT = dyn_cast<FunctionProtoType>(FT))
-  {
-    for (unsigned i = 0, e = FPT->getNumParams(); i != e; i++)
-    {
-      llvm::errs() << "field=" << FPT->getParamType(i).getAsString() << "\n";
-    }
-  }
-  llvm::errs() << "IS_FUNCTION\n";
   // First, check whether we can build the full function type.  If the
   // function type depends on an incomplete type (e.g. a struct or enum), we
   // cannot lower the function type.
