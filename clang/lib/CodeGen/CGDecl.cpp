@@ -1546,7 +1546,8 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
         allocaAlignment = byrefInfo.ByrefAlignment;
       } else {
         llvm::errs() << "fffffffffffffffffffff\n";
-        allocaTy = ConvertTypeForMem(Ty);
+        allocaTy = ConvertTypeForMemHelper(Ty, is_ptr);
+        //allocaTy = ConvertTypeForMem(Ty);
         allocaAlignment = alignment;
       }
       // Create the alloca.  Note that we set the name separately from
@@ -1653,9 +1654,18 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
 
   llvm::errs() << "end of emission\n";
   // Add metadata for sizeof
-  llvm::Type* AllocaTy = getTypes().ConvertTypeForMem(D.getType());
-  llvm::AllocaInst *Alloc =
-    CreateTempAlloca(AllocaTy, D.getNameAsString());
+  if (is_ptr)
+  {
+    llvm::Type* AllocaTy = getTypes().ConvertTypeForMem(D.getType());
+    llvm::AllocaInst *Alloc =
+      CreateTempAlloca(AllocaTy, D.getNameAsString());
+    auto MD = llvm::MDString::get(CGF.getLLVMContext(), "intptr_t");
+    llvm::MDNode* MDNode = llvm::MDNode::get(CGF.getLLVMContext(), MD);
+    std::vector<llvm::Metadata*> metadata_v;
+    metadata_v.push_back(MDNode);
+    ArrayRef<llvm::Metadata*> arr(metadata_v);
+    Alloc->addMetadata_public("sizeof", *llvm::MDNode::get(CGF.getLLVMContext(), arr));
+  }
   return emission;
 }
 
