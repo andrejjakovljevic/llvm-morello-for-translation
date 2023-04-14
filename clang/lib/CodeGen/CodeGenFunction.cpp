@@ -235,6 +235,15 @@ CodeGenFunction::MakeNaturalAlignPointeeAddrLValue(llvm::Value *V, QualType T) {
   return MakeAddrLValue(Address(V, Align), T, BaseInfo, TBAAInfo);
 }
 
+llvm::Type *CodeGenFunction::ConvertTypeForMemHelper(QualType T, bool& is_ptr)
+{
+  if (T.getAsString()=="uintptr_t")
+  {
+    is_ptr=true;
+  }
+  llvm::Type* new_type = CGM.getTypes().ConvertTypeForMem(T);
+  return new_type;
+}
 
 llvm::Type *CodeGenFunction::ConvertTypeForMem(QualType T) {
   return CGM.getTypes().ConvertTypeForMem(T);

@@ -96,17 +96,12 @@ llvm::Type *CodeGenTypes::ConvertTypeForMem(QualType T, bool ForBitField) {
   }
 
   llvm::Type *R = ConvertType(T);
-  llvm::errs() << "Now I'm here\n";
   // If this is a bool type, or an ExtIntType in a bitfield representation,
   // map this integer to the target-specified size.
   if ((ForBitField && T->isExtIntType()) ||
       (!T->isExtIntType() && R->isIntegerTy(1)))
     return llvm::IntegerType::get(getLLVMContext(),
                                   (unsigned)Context.getTypeSize(T));
-
-  llvm::errs() << "Now\n";
-  llvm::errs() << "name=" << T.getAsString() << "\n";
-  llvm::errs() << "Now\n";
   // Else, don't map it.
   return R;
 }

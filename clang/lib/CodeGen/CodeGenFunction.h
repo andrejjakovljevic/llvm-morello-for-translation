@@ -2342,7 +2342,7 @@ public:
   /// a catch handler) that just calls terminate.  This is used when
   /// a terminate scope encloses a try.
   llvm::BasicBlock *getTerminateHandler();
-
+  llvm::Type *ConvertTypeForMemHelper(QualType T, bool& is_ptr);
   llvm::Type *ConvertTypeForMem(QualType T);
   llvm::Type *ConvertType(QualType T);
   llvm::Type *ConvertType(const TypeDecl *T) {

@@ -1651,6 +1651,10 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
                                          emission.getSizeForLifetimeMarkers());
 
   llvm::errs() << "end of emission\n";
+  // Add metadata for sizeof
+  Type AllocaTy = getTypes().ConvertTypeForMem(D.getType());
+  llvm::AllocaInst *Alloc =
+    CreateTempAlloca(AllocaTy, D.getNameAsString());
   return emission;
 }
 
