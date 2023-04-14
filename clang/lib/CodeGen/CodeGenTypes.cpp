@@ -854,7 +854,7 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
   for (const auto &FD : RD->fields()) 
   {
     QualType qt = FD->getType();
-    std::string fieldName = qt->getAsString();
+    std::string fieldName = qt.getAsString();
     llvm::errs() << "Field Name: " << fieldName << "\n";
   }
   llvm::errs() << "---------------------------------\n";
