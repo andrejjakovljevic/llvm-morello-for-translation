@@ -403,6 +403,9 @@ llvm::Type* CodeGenTypes::ConvertTypeHelper(QualType T, bool& is_ptr)
 
 /// ConvertType - Convert the specified type to its LLVM form.
 llvm::Type *CodeGenTypes::ConvertType(QualType T) {
+  llvm::errs() << "weeeeeeeeee\n";
+  llvm::errs() << "all_names=" << T.getAsString() << "\n";
+  llvm::errs() << "weeeeeeeeee\n";
   if (cast<BuiltinType>(T.getTypePtr())->getKind()==Type::FunctionProto)
   {
     llvm::errs() << "weeeeeeeeee\n";
