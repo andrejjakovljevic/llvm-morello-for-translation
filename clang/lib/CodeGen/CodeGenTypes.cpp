@@ -322,6 +322,9 @@ static llvm::Type *getTypeForFormat(llvm::LLVMContext &VMContext,
 
 llvm::Type *CodeGenTypes::ConvertFunctionTypeInternal(QualType QFT) {
   assert(QFT.isCanonical());
+  llvm::errs() << "IS_FUNCTION\n";
+  llvm::errs() << "is_fun_name=" << QFT.getAsString() << "\n";
+  llvm::errs() << "IS_FUNCTION\n";
   const Type *Ty = QFT.getTypePtr();
   const FunctionType *FT = cast<FunctionType>(QFT.getTypePtr());
   // First, check whether we can build the full function type.  If the
@@ -866,9 +869,6 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
         llvm::MDNode *Op = Flags->getOperand(i);
         if (Op->getNumOperands() >= 1) {
           llvm::MDString *Name = llvm::dyn_cast<llvm::MDString>(Op->getOperand(1));
-          llvm::errs() << "ttttttt\n";
-          llvm::errs() << "flaaaags=" << Name << "\n";
-          llvm::errs() << "ttttttt\n";
           if (Name && Name->getString() == RD->getNameAsString()) {
             flagExists = true;
             break;
