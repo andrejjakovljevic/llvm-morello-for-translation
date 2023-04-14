@@ -1659,12 +1659,12 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
     llvm::Type* AllocaTy = getTypes().ConvertTypeForMem(D.getType());
     llvm::AllocaInst *Alloc =
       CreateTempAlloca(AllocaTy, D.getNameAsString());
-    auto MD = llvm::MDString::get(CGF.getLLVMContext(), "intptr_t");
-    llvm::MDNode* MDNode = llvm::MDNode::get(CGF.getLLVMContext(), MD);
+    auto MD = llvm::MDString::get(getLLVMContext(), "intptr_t");
+    llvm::MDNode* MDNode = llvm::MDNode::get(getLLVMContext(), MD);
     std::vector<llvm::Metadata*> metadata_v;
     metadata_v.push_back(MDNode);
     ArrayRef<llvm::Metadata*> arr(metadata_v);
-    Alloc->addMetadata_public("sizeof", *llvm::MDNode::get(CGF.getLLVMContext(), arr));
+    Alloc->addMetadata_public("sizeof", *llvm::MDNode::get(getLLVMContext(), arr));
   }
   return emission;
 }
