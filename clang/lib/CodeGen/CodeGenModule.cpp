@@ -3820,7 +3820,7 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
           }
           if (!flagExists)
           {
-            M.addModuleFlag(llvm::Module::Error, getMangledName(GD), uint32_t(i));
+            M.addModuleFlag(llvm::Module::Append, getMangledName(GD), uint32_t(i));
           }
         }
       }

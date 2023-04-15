@@ -878,7 +878,7 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
     }
     if (!flagExists && (fieldName=="uintptr_t" || fieldName=="intptr_t"))
     {
-      M.addModuleFlag(llvm::Module::Error, RD->getNameAsString(), uint32_t(cnt));
+      M.addModuleFlag(llvm::Module::Append, RD->getNameAsString(), uint32_t(cnt));
     }
     cnt++;
   }
