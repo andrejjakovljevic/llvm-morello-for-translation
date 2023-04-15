@@ -3811,7 +3811,7 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
               if (Op->getNumOperands() > 2) {
                 llvm::MDString *Name = llvm::dyn_cast<llvm::MDString>(Op->getOperand(1));
                 llvm::MDString *cnt = llvm::dyn_cast<llvm::MDString>(Op->getOperand(2));
-                if (cnt && cnt->getString() == to_string(uint32_t(i)) && Name && Name->getString()==getMangledName(GD).str()) {
+                if (cnt && cnt->getString() == std::to_string(uint32_t(i)) && Name && Name->getString()==getMangledName(GD).str()) {
                   flagExists = true;
                   break;
                 }
