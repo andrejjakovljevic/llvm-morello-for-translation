@@ -3808,9 +3808,9 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
             for (unsigned i = 0, e = Flags->getNumOperands(); i != e; ++i) 
             {
               llvm::MDNode *Op = Flags->getOperand(i);
-              if (Op->getNumOperands() > 1) {
-                llvm::MDString *Name = llvm::dyn_cast<llvm::MDString>(Op->getOperand(1));
-                if (Name && Name->getString() == RD->getNameAsString()) {
+              if (Op->getNumOperands() > 2) {
+                llvm::MDString *Name = llvm::dyn_cast<llvm::MDString>(Op->getOperand(2));
+                if (Name && Name->getString() == to_string(uint32_t(i))) {
                   flagExists = true;
                   break;
                 }
@@ -3819,7 +3819,7 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
           }
           if (!flagExists)
           {
-            M.addModuleFlag(llvm::Module::Error, RD->getNameAsString(), uint32_t(i));
+            M.addModuleFlag(llvm::Module::Error, RD->getNameAsString(), std::to_string(uint32_t(i)));
           }
         }
       }
