@@ -3473,9 +3473,11 @@ static LValue EmitGlobalVarDeclLValue(CodeGenFunction &CGF,
 static llvm::Value *EmitFunctionDeclPointer(CodeGenFunction &CGF,
                                             GlobalDecl GD,
                                             bool IsDirectCall) {
-  llvm::errs() << "WOOOOOOOOOOOOOOOOOoo\n";
   CodeGenModule &CGM = CGF.CGM;
   const FunctionDecl *FD = cast<FunctionDecl>(GD.getDecl());
+  llvm::errs() << "WOOOOOOOOOOOOOOOOOoo\n";
+  llvm::errs() << "THE FUNCTION NAME IS:" << FD->getName() << "\n";
+  llvm::errs() << "WOOOOOOOOOOOOOOOOOoo\n";
   if (FD->hasAttr<WeakRefAttr>()) {
     ConstantAddress aliasee = CGM.GetWeakRefReference(FD);
     return aliasee.getPointer();
