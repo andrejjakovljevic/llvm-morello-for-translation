@@ -882,7 +882,6 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
     }
     if (!flagExists && (fieldName=="uintptr_t" || fieldName=="intptr_t"))
     {
-      llvm::errs() << "heeeeee=" << RD->getNameAsString() << "\n";
       M.addModuleFlag(llvm::Module::Warning, RD->getNameAsString()+"#"+std::to_string(uint32_t(cnt)), uint32_t(cnt));
     }
     cnt++;
