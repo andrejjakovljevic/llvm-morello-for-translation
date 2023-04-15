@@ -870,7 +870,7 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
             {
               llvm::ConstantInt* CI = llvm::cast<llvm::ConstantInt>(CAM->getValue());
               int Value = CI->getSExtValue();
-              if (Value==(int)i)
+              if (Value==(int)cnt)
               {
                 flagExists = true;
                 break;
