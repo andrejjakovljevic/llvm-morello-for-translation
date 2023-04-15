@@ -3794,10 +3794,34 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
     auto func_type = FD->getType();
     if (const FunctionProtoType *FPT = dyn_cast<FunctionProtoType>(func_type))
     {
+      llvm::Module &M = getModule();
       for (unsigned i = 0, e = FPT->getNumParams(); i != e; i++)
       {
         auto param_type = FPT->getParamType(i);
         llvm::errs() << "param=" << param_type.getAsString() << "\n";
+        if (param_type.getAsString()=="intptr_t" || param_type.getAsString()=="uintptr_t")
+        {
+          bool flagExists=false;
+          llvm::NamedMDNode *Flags = M.getModuleFlagsMetadata();
+          if (Flags) 
+          {
+            for (unsigned i = 0, e = Flags->getNumOperands(); i != e; ++i) 
+            {
+              llvm::MDNode *Op = Flags->getOperand(i);
+              if (Op->getNumOperands() > 1) {
+                llvm::MDString *Name = llvm::dyn_cast<llvm::MDString>(Op->getOperand(1));
+                if (Name && Name->getString() == RD->getNameAsString()) {
+                  flagExists = true;
+                  break;
+                }
+              }
+            }
+          }
+          if (!flagExists)
+          {
+            M.addModuleFlag(llvm::Module::Error, RD->getNameAsString(), uint32_t(i));
+          }
+        }
       }
     }
     Ty = getTypes().ConvertType(FD->getType());

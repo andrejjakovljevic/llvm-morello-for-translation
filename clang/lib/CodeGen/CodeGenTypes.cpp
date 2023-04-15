@@ -857,7 +857,6 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
   // type connected to the decl.
   const Type *Key = Context.getTagDeclType(RD).getTypePtr();
   llvm::Module &M = CGM.getModule();
-  std::vector<llvm::Metadata*> metadata_v;
   int cnt = 0;
   bool flagExists=false;
   for (const auto &FD : RD->fields()) 
@@ -868,7 +867,7 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
     if (Flags) {
       for (unsigned i = 0, e = Flags->getNumOperands(); i != e; ++i) {
         llvm::MDNode *Op = Flags->getOperand(i);
-        if (Op->getNumOperands() >= 1) {
+        if (Op->getNumOperands() > 1) {
           llvm::MDString *Name = llvm::dyn_cast<llvm::MDString>(Op->getOperand(1));
           if (Name && Name->getString() == RD->getNameAsString()) {
             flagExists = true;
