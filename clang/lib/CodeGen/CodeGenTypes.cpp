@@ -869,14 +869,14 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
         llvm::MDNode *Op = Flags->getOperand(i);
         if (Op->getNumOperands() > 2) {
           llvm::MDString *Name = llvm::dyn_cast<llvm::MDString>(Op->getOperand(1));
-          llvm::Metadata* Value = Flag->getOperand(2);
+          llvm::Metadata* Value = Op->getOperand(2);
           if (Name && Name->getString() == RD->getNameAsString() && Value) {
             llvm::ConstantAsMetadata* CAM = llvm::dyn_cast<llvm::ConstantAsMetadata>(Value);
             if (CAM && CAM->getValue() && llvm::isa<llvm::ConstantInt>(CAM->getValue())) 
             {
               llvm::ConstantInt* CI = llvm::cast<llvm::ConstantInt>(CAM->getValue());
               int Value = CI->getSExtValue();
-              if (Value==i)
+              if (Value==(int)i)
               {
                 flagExists = true;
                 break;
