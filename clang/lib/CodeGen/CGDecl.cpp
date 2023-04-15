@@ -1646,7 +1646,7 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
                                          emission.getOriginalAllocatedAddress(),
                                          emission.getSizeForLifetimeMarkers());
 
-  // Add metadata for sizeof
+  // Add metadata for inptr_t
   if (is_ptr && address.getPointer())
   {
     auto MD = llvm::MDString::get(getLLVMContext(), "intptr_t");
@@ -1654,7 +1654,7 @@ CodeGenFunction::EmitAutoVarAlloca(const VarDecl &D) {
     std::vector<llvm::Metadata*> metadata_v;
     metadata_v.push_back(MDNode);
     ArrayRef<llvm::Metadata*> arr(metadata_v);
-    address.getPointer()->addMetadata_public("sizeof", *llvm::MDNode::get(getLLVMContext(), arr));
+    address.getPointer()->addMetadata_public("intptr_t", *llvm::MDNode::get(getLLVMContext(), arr));
   }
   return emission;
 }
