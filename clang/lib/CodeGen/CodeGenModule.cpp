@@ -3789,10 +3789,20 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
   // If there was no specific requested type, just convert it now.
   llvm::errs() << "TRPPPP1\n";
   if (!Ty) {
+    // adding metadata for sizeof
+    auto func_type = FD->getType();
+    if (const FunctionProtoType *FPT = dyn_cast<FunctionProtoType>(func_type))
+    {
+      for (unsigned i = 0, e = FPT->getNumParams(); i != e; i++)
+      {
+        auto param_type = FPT->getParamType(i);
+        llvm::errs() << "param=" << param_type.getAsString() << "\n";
+      }
+    }
     const auto *FD = cast<FunctionDecl>(GD.getDecl());
     Ty = getTypes().ConvertType(FD->getType());
   }
-  llvm::errs() << "TRPPPP1\n";
+  llvm::errs() << "TRPPPP2\n";
   // Devirtualized destructor calls may come through here instead of via
   // getAddrOfCXXStructor. Make sure we use the MS ABI base destructor instead
   // of the complete destructor when necessary.
