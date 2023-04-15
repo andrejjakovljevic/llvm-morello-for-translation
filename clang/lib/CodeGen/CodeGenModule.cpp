@@ -3818,7 +3818,7 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
           }
           if (!flagExists)
           {
-            M.addModuleFlag(llvm::Module::Append, getMangledName(GD), uint32_t(i));
+            M.addModuleFlag(llvm::Module::Warning, getMangledName(GD), uint32_t(i));
           }
         }
       }
