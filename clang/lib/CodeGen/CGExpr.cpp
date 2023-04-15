@@ -3473,6 +3473,7 @@ static LValue EmitGlobalVarDeclLValue(CodeGenFunction &CGF,
 static llvm::Value *EmitFunctionDeclPointer(CodeGenFunction &CGF,
                                             GlobalDecl GD,
                                             bool IsDirectCall) {
+  llvm::errs() << "WOOOOOOOOOOOOOOOOOoo\n";
   CodeGenModule &CGM = CGF.CGM;
   const FunctionDecl *FD = cast<FunctionDecl>(GD.getDecl());
   if (FD->hasAttr<WeakRefAttr>()) {

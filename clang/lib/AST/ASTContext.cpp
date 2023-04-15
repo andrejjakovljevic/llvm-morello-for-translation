@@ -3112,7 +3112,6 @@ const FunctionType *ASTContext::adjustFunctionType(const FunctionType *T,
                                                    FunctionType::ExtInfo Info) {
   if (T->getExtInfo() == Info)
     return T;
-  llvm::errs() << "AM I HERE?\n";
   QualType Result;
   if (const auto *FNPT = dyn_cast<FunctionNoProtoType>(T)) {
     Result = getFunctionNoProtoType(FNPT->getReturnType(), Info);
