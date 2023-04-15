@@ -3787,12 +3787,12 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
   assert(!cast<FunctionDecl>(GD.getDecl())->isConsteval() &&
          "consteval function should never be emitted");
   // If there was no specific requested type, just convert it now.
-  llvm::errs() << "TRPPPP\n";
+  llvm::errs() << "TRPPPP1\n";
   if (!Ty) {
     const auto *FD = cast<FunctionDecl>(GD.getDecl());
     Ty = getTypes().ConvertType(FD->getType());
   }
-
+  llvm::errs() << "TRPPPP1\n";
   // Devirtualized destructor calls may come through here instead of via
   // getAddrOfCXXStructor. Make sure we use the MS ABI base destructor instead
   // of the complete destructor when necessary.
