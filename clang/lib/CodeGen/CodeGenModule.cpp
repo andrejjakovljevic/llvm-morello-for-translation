@@ -3808,6 +3808,8 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
                                     /*IsThunk=*/false, llvm::AttributeList(),
                                     IsForDefinition);
   // Returns kernel handle for HIP kernel stub function.
+
+  llvm::errs() << "mangledName2=" << MangledName << "\n"; 
   if (LangOpts.CUDA && !LangOpts.CUDAIsDevice &&
       cast<FunctionDecl>(GD.getDecl())->hasAttr<CUDAGlobalAttr>()) {
     auto *Handle = getCUDARuntime().getKernelHandle(
