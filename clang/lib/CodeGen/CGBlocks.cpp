@@ -1510,6 +1510,7 @@ CodeGenFunction::GenerateBlockFunction(GlobalDecl GD,
   llvm::FunctionType *fnLLVMType = CGM.getTypes().GetFunctionType(fnInfo);
 
   StringRef name = CGM.getBlockMangledName(GD, blockDecl);
+  llvm::errs() << "is this the name? " << name << "\n";
   llvm::Function *fn = llvm::Function::Create(
       fnLLVMType, llvm::GlobalValue::InternalLinkage, name, &CGM.getModule());
   CGM.SetInternalFunctionAttributes(blockDecl, fn, fnInfo);
