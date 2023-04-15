@@ -3503,6 +3503,7 @@ static llvm::Value *EmitFunctionDeclPointer(CodeGenFunction &CGF,
                                       CGM.getTypes().ConvertType(NoProtoType));
     }
   }
+  llvm::errs() << "THE END\n";
   return V;
 }
 
