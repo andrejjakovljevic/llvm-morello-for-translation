@@ -3789,6 +3789,7 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
   // If there was no specific requested type, just convert it now.
   llvm::errs() << "TRPPPP1\n";
   if (!Ty) {
+    const auto *FD = cast<FunctionDecl>(GD.getDecl());
     // adding metadata for sizeof
     auto func_type = FD->getType();
     if (const FunctionProtoType *FPT = dyn_cast<FunctionProtoType>(func_type))
@@ -3799,7 +3800,6 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
         llvm::errs() << "param=" << param_type.getAsString() << "\n";
       }
     }
-    const auto *FD = cast<FunctionDecl>(GD.getDecl());
     Ty = getTypes().ConvertType(FD->getType());
   }
   llvm::errs() << "TRPPPP2\n";
