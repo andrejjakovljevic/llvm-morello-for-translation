@@ -3787,6 +3787,7 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
   assert(!cast<FunctionDecl>(GD.getDecl())->isConsteval() &&
          "consteval function should never be emitted");
   // If there was no specific requested type, just convert it now.
+  llvm::errs() << "TRPPPP\n";
   if (!Ty) {
     const auto *FD = cast<FunctionDecl>(GD.getDecl());
     Ty = getTypes().ConvertType(FD->getType());
