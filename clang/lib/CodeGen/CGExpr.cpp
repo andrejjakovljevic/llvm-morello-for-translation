@@ -3485,12 +3485,13 @@ static llvm::Value *EmitFunctionDeclPointer(CodeGenFunction &CGF,
 
   llvm::errs() << "THE BEGGINING\n";
   llvm::Value *V = CGM.GetAddrOfFunction(GD);
+  llvm::errs() << "THE MIDDLE1\n";
   auto &TI = CGF.getContext().getTargetInfo();
+  llvm::errs() << "THE MIDDLE2\n";
   if (TI.areAllPointersCapabilities()) {
     assert(V->getType()->getPointerAddressSpace() ==
         CGF.CGM.getTargetCodeGenInfo().getCHERICapabilityAS());
   }
-  llvm::errs() << "THE MIDDLE\n";
 
   if (!FD->hasPrototype()) {
     if (const FunctionProtoType *Proto =
