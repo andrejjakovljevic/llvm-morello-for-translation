@@ -3475,19 +3475,13 @@ static llvm::Value *EmitFunctionDeclPointer(CodeGenFunction &CGF,
                                             bool IsDirectCall) {
   CodeGenModule &CGM = CGF.CGM;
   const FunctionDecl *FD = cast<FunctionDecl>(GD.getDecl());
-  llvm::errs() << "WOOOOOOOOOOOOOOOOOoo\n";
-  llvm::errs() << "THE FUNCTION NAME IS:" << FD->getName() << "\n";
-  llvm::errs() << "WOOOOOOOOOOOOOOOOOoo\n";
   if (FD->hasAttr<WeakRefAttr>()) {
     ConstantAddress aliasee = CGM.GetWeakRefReference(FD);
     return aliasee.getPointer();
   }
 
-  llvm::errs() << "THE BEGGINING\n";
   llvm::Value *V = CGM.GetAddrOfFunction(GD);
-  llvm::errs() << "THE MIDDLE1\n";
   auto &TI = CGF.getContext().getTargetInfo();
-  llvm::errs() << "THE MIDDLE2\n";
   if (TI.areAllPointersCapabilities()) {
     assert(V->getType()->getPointerAddressSpace() ==
         CGF.CGM.getTargetCodeGenInfo().getCHERICapabilityAS());
@@ -3506,7 +3500,6 @@ static llvm::Value *EmitFunctionDeclPointer(CodeGenFunction &CGF,
                                       CGM.getTypes().ConvertType(NoProtoType));
     }
   }
-  llvm::errs() << "THE END\n";
   return V;
 }
 

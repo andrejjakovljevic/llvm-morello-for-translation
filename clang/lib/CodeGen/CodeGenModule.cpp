@@ -3787,7 +3787,6 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
   assert(!cast<FunctionDecl>(GD.getDecl())->isConsteval() &&
          "consteval function should never be emitted");
   // If there was no specific requested type, just convert it now.
-  llvm::errs() << "TRPPPP1\n";
   if (!Ty) {
     const auto *FD = cast<FunctionDecl>(GD.getDecl());
     // adding metadata for sizeof
@@ -3798,7 +3797,6 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
       for (unsigned i = 0, e = FPT->getNumParams(); i != e; i++)
       {
         auto param_type = FPT->getParamType(i);
-        llvm::errs() << "param=" << param_type.getAsString() << "\n";
         if (param_type.getAsString()=="intptr_t" || param_type.getAsString()=="uintptr_t")
         {
           bool flagExists=false;
@@ -3827,7 +3825,6 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
     }
     Ty = getTypes().ConvertType(FD->getType());
   }
-  llvm::errs() << "TRPPPP2\n";
   // Devirtualized destructor calls may come through here instead of via
   // getAddrOfCXXStructor. Make sure we use the MS ABI base destructor instead
   // of the complete destructor when necessary.
@@ -3839,13 +3836,11 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
   }
 
   StringRef MangledName = getMangledName(GD);
-  llvm::errs() << "mangledName=" << MangledName << "\n"; 
   auto *F = GetOrCreateLLVMFunction(MangledName, Ty, GD, ForVTable, DontDefer,
                                     /*IsThunk=*/false, llvm::AttributeList(),
                                     IsForDefinition);
   // Returns kernel handle for HIP kernel stub function.
 
-  llvm::errs() << "mangledName2=" << MangledName << "\n"; 
   if (LangOpts.CUDA && !LangOpts.CUDAIsDevice &&
       cast<FunctionDecl>(GD.getDecl())->hasAttr<CUDAGlobalAttr>()) {
     auto *Handle = getCUDARuntime().getKernelHandle(
