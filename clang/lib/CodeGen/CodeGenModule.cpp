@@ -3803,6 +3803,7 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
   }
 
   StringRef MangledName = getMangledName(GD);
+  llvm::errs() << "mangledName=" << MangledName << "\n"; 
   auto *F = GetOrCreateLLVMFunction(MangledName, Ty, GD, ForVTable, DontDefer,
                                     /*IsThunk=*/false, llvm::AttributeList(),
                                     IsForDefinition);
