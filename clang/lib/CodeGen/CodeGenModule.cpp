@@ -3809,7 +3809,7 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
               if (Op->getNumOperands() > 2) {
                 llvm::MDString *Name = llvm::dyn_cast<llvm::MDString>(Op->getOperand(1));
                 llvm::MDString *cnt = llvm::dyn_cast<llvm::MDString>(Op->getOperand(2));
-                if (cnt && cnt->getString() == std::to_string(uint32_t(i)) && Name && Name->getString()==getMangledName(GD).str()) {
+                if (cnt && cnt->getString() == std::to_string(uint32_t(i)) && Name && getMangledName(GD)+"."+std::to_string(uint32_t(i))) {
                   flagExists = true;
                   break;
                 }
@@ -3818,7 +3818,7 @@ llvm::Constant *CodeGenModule::GetAddrOfFunction(GlobalDecl GD,
           }
           if (!flagExists)
           {
-            M.addModuleFlag(llvm::Module::Warning, getMangledName(GD), uint32_t(i));
+            M.addModuleFlag(llvm::Module::Warning, getMangledName(GD)+"."+std::to_string(uint32_t(i)), uint32_t(i));
           }
         }
       }

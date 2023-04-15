@@ -864,7 +864,7 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
         if (Op->getNumOperands() > 2) {
           llvm::MDString *Name = llvm::dyn_cast<llvm::MDString>(Op->getOperand(1));
           llvm::Metadata* Value = Op->getOperand(2);
-          if (Name && Name->getString() == RD->getNameAsString() && Value) {
+          if (Name && Name->getString() == RD->getNameAsString()+"."+std::to_string(uint32_t(cnt)) && Value) {
             llvm::ConstantAsMetadata* CAM = llvm::dyn_cast<llvm::ConstantAsMetadata>(Value);
             if (CAM && CAM->getValue() && llvm::isa<llvm::ConstantInt>(CAM->getValue())) 
             {
@@ -882,7 +882,7 @@ llvm::StructType *CodeGenTypes::ConvertRecordDeclType(const RecordDecl *RD) {
     }
     if (!flagExists && (fieldName=="uintptr_t" || fieldName=="intptr_t"))
     {
-      M.addModuleFlag(llvm::Module::Warning, RD->getNameAsString(), uint32_t(cnt));
+      M.addModuleFlag(llvm::Module::Warning, RD->getNameAsString()+"."+std::to_string(uint32_t(cnt)), uint32_t(cnt));
     }
     cnt++;
   }
