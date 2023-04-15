@@ -3489,6 +3489,7 @@ static llvm::Value *EmitFunctionDeclPointer(CodeGenFunction &CGF,
     assert(V->getType()->getPointerAddressSpace() ==
         CGF.CGM.getTargetCodeGenInfo().getCHERICapabilityAS());
   }
+  llvm::errs() << "THE MIDDLE\n";
 
   if (!FD->hasPrototype()) {
     if (const FunctionProtoType *Proto =
