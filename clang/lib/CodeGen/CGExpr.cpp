@@ -3483,6 +3483,7 @@ static llvm::Value *EmitFunctionDeclPointer(CodeGenFunction &CGF,
     return aliasee.getPointer();
   }
 
+  llvm::errs() << "THE BEGGINING\n";
   llvm::Value *V = CGM.GetAddrOfFunction(GD);
   auto &TI = CGF.getContext().getTargetInfo();
   if (TI.areAllPointersCapabilities()) {
