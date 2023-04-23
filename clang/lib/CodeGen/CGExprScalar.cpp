@@ -3440,7 +3440,7 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
       {
         if (vecy2[i]!="struct")
         {
-          if (sol.size()>0 && sol[sol.length-1]!=' ') sol+=" ";
+          if (sol.size()>0 && sol[sol.length()-1]!=' ') sol+=" ";
           llvm::errs() << "veci=" << vecy2[i] << "\n"; 
           sol+=vecy2[i];
         }
