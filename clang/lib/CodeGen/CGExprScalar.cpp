@@ -3459,6 +3459,7 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
     if (auto inst = llvm::dyn_cast<llvm::Instruction>(my_add))
     {
       //inst->addAttribute(llvm::AttributeList::FunctionIndex, llvm::Attribute::OptimizeNone);
+      llvm::errs() << "ttttttttttt\n";
       inst->addMetadata_public("sizeof", *llvm::MDNode::get(CGF.getLLVMContext(), arr));
     }
     return my_add;
