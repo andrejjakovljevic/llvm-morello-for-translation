@@ -3389,7 +3389,6 @@ std::vector<std::string> split_string(std::string& s, std::string delimiter)
 Value *
 ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
                               const UnaryExprOrTypeTraitExpr *E) {       
-  llvm::errs() << "AREEEEEEE\n";
   QualType TypeToSize = E->getTypeOfArgument();
   if (E->getKind() == UETT_SizeOf) {
     if (const VariableArrayType *VAT =
@@ -3425,7 +3424,6 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
   // If this isn't sizeof(vla), the result must be constant; use the constant
   // folding logic so we don't have to duplicate it here.
   std::string sizeof_typename = TypeToSize.getAsString();
-  llvm::errs() << "HEEREEEE\n";
   if (TypeToSize.getBaseTypeIdentifier())
   {
     std::string real_name = TypeToSize.getBaseTypeIdentifier()->getName().str();
@@ -3439,8 +3437,10 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
       for (int i=0;i<(int)vecy2.size();i++)
       {
         if (i!=0) sol+=" ";
+        llvm::errs() << "veci=" << vecy2[i] << "\n";
         sol+=vecy2[i];
       }
+      llvm::errs() << "sol=" << sol << "\n";
       sizeof_typename = sol; 
     }
   }
@@ -3460,7 +3460,6 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
     if (auto inst = llvm::dyn_cast<llvm::Instruction>(my_add))
     {
       //inst->addAttribute(llvm::AttributeList::FunctionIndex, llvm::Attribute::OptimizeNone);
-      llvm::errs() << "ttttttttttt\n";
       inst->addMetadata_public("sizeof", *llvm::MDNode::get(CGF.getLLVMContext(), arr));
     }
     return my_add;
