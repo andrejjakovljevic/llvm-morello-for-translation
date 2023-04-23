@@ -3460,7 +3460,7 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
     metadata_v.push_back(MDNode);
     ArrayRef<llvm::Metadata*> arr(metadata_v);
     auto my_add = Builder.Insert(llvm::BinaryOperator::Create(llvm::Instruction::Add, const_inst,Zero), "");
-    CodeGenTypes &Types = CGM.getTypes();
+    CodeGenTypes &Types = CGF.CGM.getTypes();
     llvm::Type llvm_type = Types.ConvertType(TypeToSize);
     if (auto inst = llvm::dyn_cast<llvm::Instruction>(my_add))
     {
