@@ -3435,18 +3435,16 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
     {
       if (help!="struct") vecy2[0]=vecy1[0];
       else vecy2[1]=vecy1[0];
-      std::string sol;
-      for (int i=0;i<(int)vecy2.size();i++)
-      {
-        if (vecy2[i]!="struct")
-        {
-          if (sol.size()>0 && sol[sol.length()-1]!=' ') sol+=" ";
-          llvm::errs() << "veci=" << vecy2[i] << "\n"; 
-          sol+=vecy2[i];
-        }
-      }
-      llvm::errs() << "sol=" << sol << "\n";
-      sizeof_typename = sol; 
+    }
+  }
+  std::string sol;
+  sizeof_typename = sol; 
+  for (int i=0;i<(int)vecy2.size();i++)
+  {
+    if (vecy2[i]!="struct")
+    {
+      if (sol.size()>0 && sol[sol.length()-1]!=' ') sol+=" ";
+      sol+=vecy2[i];
     }
   }
   auto MD = llvm::MDString::get(CGF.getLLVMContext(), "sizeof " + sizeof_typename);
