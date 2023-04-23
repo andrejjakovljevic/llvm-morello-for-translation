@@ -3438,9 +3438,12 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
       std::string sol;
       for (int i=0;i<(int)vecy2.size();i++)
       {
-        if (i!=0) sol+=" ";
-        llvm::errs() << "veci=" << vecy2[i] << "\n";
-        if (vecy2[i]!="struct") sol+=vecy2[i];
+        if (vecy2[i]!="struct")
+        {
+          if (sol.size()>0 && sol[sol.length-1]!=' ') sol+=" ";
+          llvm::errs() << "veci=" << vecy2[i] << "\n"; 
+          sol+=vecy2[i];
+        }
       }
       llvm::errs() << "sol=" << sol << "\n";
       sizeof_typename = sol; 
