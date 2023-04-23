@@ -268,7 +268,7 @@ void CodeGenTypes::UpdateCompletedType(const TagDecl *TD) {
       DI->completeType(ED);
     return;
   }
-
+  llvm::errs() << "HEREEE\n";
   // If we completed a RecordDecl that we previously used and converted to an
   // anonymous type, then go ahead and complete it now.
   const RecordDecl *RD = cast<RecordDecl>(TD);
