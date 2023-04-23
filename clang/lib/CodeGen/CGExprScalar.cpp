@@ -3424,22 +3424,23 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
   // If this isn't sizeof(vla), the result must be constant; use the constant
   // folding logic so we don't have to duplicate it here.
   std::string sizeof_typename = TypeToSize.getAsString();
-  llvm::errs() << "is_this_a_nam=" << sizeof_typename << "\n";
   if (TypeToSize.getBaseTypeIdentifier())
   {
     std::string real_name = TypeToSize.getBaseTypeIdentifier()->getName().str();
     std::vector<std::string> vecy1 = split_string(real_name," ");
     std::vector<std::string> vecy2 = split_string(sizeof_typename," ");
-    llvm::errs() << "vec1=" << vecy1[0] << " vec2=" << vecy2[0] << "\n"; 
-    if (vecy1[0]!=vecy2[0])
+    std::string help = vecy2[0];
+    if (help=="struct") help=vecy2[1];
+    if (vecy1[0]!=help)
     {
-      vecy2[0]=vecy1[0];
+      if (help!="struct") vecy2[0]=vecy1[0];
+      else vecy2[1]=vecy1[0];
       std::string sol;
       for (int i=0;i<(int)vecy2.size();i++)
       {
         if (i!=0) sol+=" ";
         llvm::errs() << "veci=" << vecy2[i] << "\n";
-        sol+=vecy2[i];
+        if (vecy2[i]!="struct") sol+=vecy2[i];
       }
       llvm::errs() << "sol=" << sol << "\n";
       sizeof_typename = sol; 
