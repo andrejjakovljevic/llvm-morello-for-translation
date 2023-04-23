@@ -268,7 +268,7 @@ void CodeGenTypes::UpdateCompletedType(const TagDecl *TD) {
       DI->completeType(ED);
     return;
   }
-  llvm::errs() << "HEREEE\n";
+
   // If we completed a RecordDecl that we previously used and converted to an
   // anonymous type, then go ahead and complete it now.
   const RecordDecl *RD = cast<RecordDecl>(TD);
@@ -276,8 +276,8 @@ void CodeGenTypes::UpdateCompletedType(const TagDecl *TD) {
 
   // Only complete it if we converted it already.  If we haven't converted it
   // yet, we'll just do it lazily.
- // if (RecordDeclTypes.count(Context.getTagDeclType(RD).getTypePtr()))
-  ConvertRecordDeclType(RD);
+  if (RecordDeclTypes.count(Context.getTagDeclType(RD).getTypePtr()))
+    ConvertRecordDeclType(RD);
 
   // If necessary, provide the full definition of a type only used with a
   // declaration so far.
