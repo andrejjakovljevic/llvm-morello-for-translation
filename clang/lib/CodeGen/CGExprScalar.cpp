@@ -3388,7 +3388,8 @@ std::vector<std::string> split_string(std::string& s, std::string delimiter)
 /// argument of the sizeof expression as an integer.
 Value *
 ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
-                              const UnaryExprOrTypeTraitExpr *E) {                       
+                              const UnaryExprOrTypeTraitExpr *E) {       
+  llvm::errs() << "AREEEEEEE\n";
   QualType TypeToSize = E->getTypeOfArgument();
   if (E->getKind() == UETT_SizeOf) {
     if (const VariableArrayType *VAT =
