@@ -3424,11 +3424,11 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
   // If this isn't sizeof(vla), the result must be constant; use the constant
   // folding logic so we don't have to duplicate it here.
   std::string sizeof_typename = TypeToSize.getAsString();
+  std::vector<std::string> vecy2 = split_string(sizeof_typename," ");
   if (TypeToSize.getBaseTypeIdentifier())
   {
     std::string real_name = TypeToSize.getBaseTypeIdentifier()->getName().str();
     std::vector<std::string> vecy1 = split_string(real_name," ");
-    std::vector<std::string> vecy2 = split_string(sizeof_typename," ");
     std::string help = vecy2[0];
     if (help=="struct") help=vecy2[1];
     if (vecy1[0]!=help)
@@ -3438,7 +3438,6 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
     }
   }
   std::string sol;
-  sizeof_typename = sol; 
   for (int i=0;i<(int)vecy2.size();i++)
   {
     if (vecy2[i]!="struct")
@@ -3447,6 +3446,7 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
       sol+=vecy2[i];
     }
   }
+  sizeof_typename = sol; 
   auto MD = llvm::MDString::get(CGF.getLLVMContext(), "sizeof " + sizeof_typename);
   //llvm::errs() << "wa=" << TypeToSize.getBaseTypeIdentifier()->getName() << "\n";
   llvm::MDNode* MDNode = llvm::MDNode::get(CGF.getLLVMContext(), MD);
