@@ -4982,7 +4982,7 @@ RValue CodeGenFunction::EmitCall(const CGFunctionInfo &CallInfo,
         // of the destination type to allow loading all of it. The bits past
         // the source value are left undef.
         if (SrcSize < DstSize) {
-          llvm::errs() << "AM I coercing3?\n";
+          llvm::errs() << "AM I coercing4?\n";
           Address TempAlloca
             = CreateTempAlloca(STy, Src.getAlignment(),
                                Src.getName() + ".coerce");
