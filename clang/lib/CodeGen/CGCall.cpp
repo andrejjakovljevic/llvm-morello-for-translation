@@ -2932,7 +2932,7 @@ void CodeGenFunction::EmitFunctionProlog(const CGFunctionInfo &FI,
         llvm::errs() << "type=" << Arg->getType().getAsString() << "\n";
         llvm::errs() << "AM I coercing3?\n";
         AI->setName(Arg->getName() + ".coerce");
-        CreateCoercedStore(AI, Ptr, /*DstIsVolatile=*/false, *this);
+        CreateStore(AI, Ptr);
       }
 
       // Match to what EmitParmDecl is expecting for this type.
