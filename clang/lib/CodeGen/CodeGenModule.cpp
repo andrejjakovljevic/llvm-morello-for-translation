@@ -4461,7 +4461,7 @@ void CodeGenModule::EmitGlobalVarDefinition(const VarDecl *D,
   // OpenCL global variables of sampler type are translated to function calls,
   // therefore no need to be translated.
   QualType ASTTy = D->getType();
-  // Ad flags in case of uintptr_t
+  // Add flags in case of uintptr_t
   if (ASTTy.getAsString()=="uintptr_t" || ASTTy.getAsString()=="intptr_t")
   {
     llvm::Module &M = getModule();
