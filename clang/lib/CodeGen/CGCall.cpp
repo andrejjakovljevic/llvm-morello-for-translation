@@ -2931,7 +2931,7 @@ void CodeGenFunction::EmitFunctionProlog(const CGFunctionInfo &FI,
         llvm::errs() << "name=" << Arg->getName() << "\n";
         llvm::errs() << "type=" << Arg->getType().getAsString() << "\n";
         llvm::errs() << "AM I coercing3?\n";
-        llvm::StringRef attr_name = "coarced#"+Arg->getName().str();
+        llvm::StringRef attr_name = Arg->getName().str();
         llvm::AttributeList Attrs = Fn->getAttributes();
         AI->setName(Arg->getName() + ".coerce");
         llvm::AttrBuilder AB;
