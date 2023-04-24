@@ -3463,7 +3463,7 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
     CodeGenTypes &Types = CGF.CGM.getTypes();
     llvm::Type* llvm_type = Types.ConvertType(TypeToSize);
     Module *mod = Builder.GetInsertBlock()->getParent()->getParent();
-    GlobalVariable* gv = new GlobalVariable(mod, llvm_type, false, llvm::GlobalValue::ExternalLinkage, initializer, "myGlobalVar");
+    GlobalVariable* gv = new GlobalVariable(mod, llvm_type, false, llvm::GlobalValue::ExternalLinkage, nullptr, "myGlobalVar");
     if (auto inst = llvm::dyn_cast<llvm::Instruction>(my_add))
     {
       //inst->addAttribute(llvm::AttributeList::FunctionIndex, llvm::Attribute::OptimizeNone);
