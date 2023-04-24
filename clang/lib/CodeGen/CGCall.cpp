@@ -2932,7 +2932,8 @@ void CodeGenFunction::EmitFunctionProlog(const CGFunctionInfo &FI,
         llvm::errs() << "type=" << Arg->getType().getAsString() << "\n";
         llvm::errs() << "AM I coercing3?\n";
         std::string s1 = Arg->getName().str();
-        std::string s2 = "coarced#"+s1;
+        std::string s3 = Arg->getType().getAsString();
+        std::string s2 = "coarced#"+s1+"#"+s3;
         llvm::errs() << "s2=" << s2 << "\n";
         llvm::StringRef attr_name = s2;
         llvm::AttributeList Attrs = Fn->getAttributes();
