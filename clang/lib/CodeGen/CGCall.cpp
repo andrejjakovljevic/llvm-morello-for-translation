@@ -2927,11 +2927,11 @@ void CodeGenFunction::EmitFunctionProlog(const CGFunctionInfo &FI,
         assert(NumIRArgs == 1);
         auto AI = Fn->getArg(FirstIRArg);
         
-        llvm::errs() << "AM I coercing3?\n";ttributeList Attrs = F.getAttributes();
+        llvm::errs() << "AM I coercing3?\n";
         llvm::errs() << "name=" << Arg->getName() << "\n";
         llvm::errs() << "type=" << Arg->getType().getAsString() << "\n";
         llvm::errs() << "AM I coercing3?\n";
-        llvm::StringRef attr_name = "coarced#"+Arg->getName();
+        llvm::StringRef attr_name = "coarced#"+Arg->getName().str();
         llvm::AttributeList Attrs = Fn->getAttributes();
         AI->setName(Arg->getName() + ".coerce");
         llvm::AttrBuilder AB;
