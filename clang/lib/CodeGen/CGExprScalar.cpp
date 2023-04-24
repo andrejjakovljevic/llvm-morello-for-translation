@@ -3462,6 +3462,7 @@ ScalarExprEmitter::VisitUnaryExprOrTypeTraitExpr(
     auto my_add = Builder.Insert(llvm::BinaryOperator::Create(llvm::Instruction::Add, const_inst,Zero), "");
     CodeGenTypes &Types = CGF.CGM.getTypes();
     llvm::Type* llvm_type = Types.ConvertType(TypeToSize);
+    GlobalVariable *var = Builder.CreateGlobalVariable(llvm_type, true, GlobalValue::ExternalLinkage, nullptr, "my_global");
     if (auto inst = llvm::dyn_cast<llvm::Instruction>(my_add))
     {
       //inst->addAttribute(llvm::AttributeList::FunctionIndex, llvm::Attribute::OptimizeNone);
