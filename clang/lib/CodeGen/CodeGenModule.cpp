@@ -4465,6 +4465,7 @@ void CodeGenModule::EmitGlobalVarDefinition(const VarDecl *D,
   llvm::errs() << "type=" << ASTTy.getAsString() << "\n";
   if (ASTTy.getAsString()=="uintptr_t" || ASTTy.getAsString()=="intptr_t")
   {
+    llvm::Module &M = getModule();
     M.addModuleFlag(llvm::Module::Warning, D->getNameAsString()+"#intptr_t");
   }
   llvm::errs() << "THIS IS A VARDECL\n";
