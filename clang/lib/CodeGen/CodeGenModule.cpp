@@ -4462,7 +4462,7 @@ void CodeGenModule::EmitGlobalVarDefinition(const VarDecl *D,
   // therefore no need to be translated.
   QualType ASTTy = D->getType();
   llvm::errs() << "THIS IS A VARDECL\n";
-  llvm::errs() << "type=" << ASTTy->getAsString() << "\n";
+  llvm::errs() << "type=" << ASTTy.getAsString() << "\n";
   llvm::errs() << "THIS IS A VARDECL\n";
   if (getLangOpts().OpenCL && ASTTy->isSamplerT())
     return;
