@@ -2928,6 +2928,8 @@ void CodeGenFunction::EmitFunctionProlog(const CGFunctionInfo &FI,
         auto AI = Fn->getArg(FirstIRArg);
         
         llvm::errs() << "AM I coercing3?\n";
+        llvm::errs() << "name=" << Arg->getName() << "\n";
+        llvm::errs() << "AM I coercing3?\n";
         AI->setName(Arg->getName() + ".coerce");
         CreateCoercedStore(AI, Ptr, /*DstIsVolatile=*/false, *this);
       }
