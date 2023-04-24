@@ -2877,6 +2877,7 @@ void CodeGenFunction::EmitFunctionProlog(const CGFunctionInfo &FI,
             llvm::Value *Zero = llvm::Constant::getNullValue(CGM.Int64Ty);
 
             assert(NumIRArgs == 1);
+            llvm::errs() << "AM I coercing2?\n";
             Coerced->setName(Arg->getName() + ".coerce");
             ArgVals.push_back(ParamValue::forDirect(Builder.CreateExtractVector(
                 VecTyTo, Coerced, Zero, "castFixedSve")));
@@ -2911,7 +2912,7 @@ void CodeGenFunction::EmitFunctionProlog(const CGFunctionInfo &FI,
         assert(STy->getNumElements() == NumIRArgs);
         for (unsigned i = 0, e = STy->getNumElements(); i != e; ++i) {
           auto AI = Fn->getArg(FirstIRArg + i);
-          llvm::errs() << "AM I coercing?\n";
+          llvm::errs() << "AM I coercing1?\n";
           AI->setName(Arg->getName() + ".coerce" + Twine(i));
           Address EltPtr = Builder.CreateStructGEP(AddrToStoreInto, i);
           Builder.CreateStore(AI, EltPtr);
@@ -2925,6 +2926,8 @@ void CodeGenFunction::EmitFunctionProlog(const CGFunctionInfo &FI,
         // Simple case, just do a coerced store of the argument into the alloca.
         assert(NumIRArgs == 1);
         auto AI = Fn->getArg(FirstIRArg);
+        
+        llvm::errs() << "AM I coercing3?\n";
         AI->setName(Arg->getName() + ".coerce");
         CreateCoercedStore(AI, Ptr, /*DstIsVolatile=*/false, *this);
       }
