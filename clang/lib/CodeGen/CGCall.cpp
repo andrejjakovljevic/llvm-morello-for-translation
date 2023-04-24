@@ -2942,7 +2942,7 @@ void CodeGenFunction::EmitFunctionProlog(const CGFunctionInfo &FI,
         llvm::errs() << "-----------------------\n";
         llvm::errs() << "attr=" << attr_name << "\n";
         llvm::errs() << "-----------------------\n";
-        AB.addAttribute(attr_name, attr_name);
+        AB.addAttribute("coerced", attr_name);
         Attrs = Attrs.addAttributes(Fn->getContext(), llvm::AttributeList::FunctionIndex, AB);
         Fn->setAttributes(Attrs);
         CreateCoercedStore(AI, Ptr, /*DstIsVolatile=*/false, *this);
