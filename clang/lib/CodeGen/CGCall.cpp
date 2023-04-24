@@ -2927,12 +2927,18 @@ void CodeGenFunction::EmitFunctionProlog(const CGFunctionInfo &FI,
         assert(NumIRArgs == 1);
         auto AI = Fn->getArg(FirstIRArg);
         
-        llvm::errs() << "AM I coercing3?\n";
+        llvm::errs() << "AM I coercing3?\n";ttributeList Attrs = F.getAttributes();
         llvm::errs() << "name=" << Arg->getName() << "\n";
         llvm::errs() << "type=" << Arg->getType().getAsString() << "\n";
         llvm::errs() << "AM I coercing3?\n";
+        llvm::StringRef attr_name = "coarced#"+Arg->getName();
+        llvm::AttributeList Attrs = Fn->getAttributes();
         AI->setName(Arg->getName() + ".coerce");
-        CreateStore(AI, Ptr);
+        llvm::AttrBuilder AB;
+        AB.addAttribute(attr_name);
+        Attrs = Attrs.addAttributes(F.getContext(), AttributeList::FunctionIndex, AB);
+        F.setAttributes(Attrs);
+        CreateCoercedStore(AI, Ptr, /*DstIsVolatile=*/false, *this);
       }
 
       // Match to what EmitParmDecl is expecting for this type.
