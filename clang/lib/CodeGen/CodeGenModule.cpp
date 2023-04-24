@@ -4461,6 +4461,9 @@ void CodeGenModule::EmitGlobalVarDefinition(const VarDecl *D,
   // OpenCL global variables of sampler type are translated to function calls,
   // therefore no need to be translated.
   QualType ASTTy = D->getType();
+  llvm::errs() << "THIS IS A VARDECL\n";
+  llvm::errs() << "type=" << ASTTy->getAsString() << "\n";
+  llvm::errs() << "THIS IS A VARDECL\n";
   if (getLangOpts().OpenCL && ASTTy->isSamplerT())
     return;
 
