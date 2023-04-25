@@ -1196,6 +1196,7 @@ static llvm::Value *CoerceIntOrPtrToIntOrPtr(llvm::Value *Val,
     // This should not happen in CHERI:
     assert(!CGF.CGM.getDataLayout().isFatPointer(Val->getType()));
     // Convert the pointer to an integer so we can play with its width.
+    llvm::errs() << "I AM HERE\n";
     Val = CGF.Builder.CreatePtrToInt(Val, CGF.IntPtrTy, "coerce.val.pi");
   }
 
