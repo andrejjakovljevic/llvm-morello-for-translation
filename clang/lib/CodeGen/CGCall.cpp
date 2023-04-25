@@ -1197,10 +1197,6 @@ static llvm::Value *CoerceIntOrPtrToIntOrPtr(llvm::Value *Val,
     assert(!CGF.CGM.getDataLayout().isFatPointer(Val->getType()));
     // Convert the pointer to an integer so we can play with its width.
     Val = CGF.Builder.CreatePtrToInt(Val, CGF.IntPtrTy, "coerce.val.pi");
-    if (llvm::isa<llvm::Instruction>(Val))
-    {
-      llvm::errs() << "I AM HERE\n";
-    }
   }
 
   llvm::Type *DestIntTy = Ty;
