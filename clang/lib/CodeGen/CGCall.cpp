@@ -2926,22 +2926,13 @@ void CodeGenFunction::EmitFunctionProlog(const CGFunctionInfo &FI,
         // Simple case, just do a coerced store of the argument into the alloca.
         assert(NumIRArgs == 1);
         auto AI = Fn->getArg(FirstIRArg);
-        
-        llvm::errs() << "AM I coercing3?\n";
-        llvm::errs() << "name=" << Arg->getName() << "\n";
-        llvm::errs() << "type=" << Arg->getType().getAsString() << "\n";
-        llvm::errs() << "AM I coercing3?\n";
         std::string s1 = Arg->getName().str()+".coerce";
         std::string s3 = Arg->getType().getAsString();
         std::string s2 = "coarced#"+s1+"#"+s3;
-        llvm::errs() << "s2=" << s2 << "\n";
         llvm::StringRef attr_name = s2;
         llvm::AttributeList Attrs = Fn->getAttributes();
         AI->setName(Arg->getName() + ".coerce");
         llvm::AttrBuilder AB;
-        llvm::errs() << "-----------------------\n";
-        llvm::errs() << "attr=" << attr_name << "\n";
-        llvm::errs() << "-----------------------\n";
         AB.addAttribute("coerced", attr_name);
         Attrs = Attrs.addAttributes(Fn->getContext(), llvm::AttributeList::FunctionIndex, AB);
         Fn->setAttributes(Attrs);
