@@ -2877,7 +2877,6 @@ void CodeGenFunction::EmitFunctionProlog(const CGFunctionInfo &FI,
             llvm::Value *Zero = llvm::Constant::getNullValue(CGM.Int64Ty);
 
             assert(NumIRArgs == 1);
-            llvm::errs() << "AM I coercing2?\n";
             Coerced->setName(Arg->getName() + ".coerce");
             ArgVals.push_back(ParamValue::forDirect(Builder.CreateExtractVector(
                 VecTyTo, Coerced, Zero, "castFixedSve")));
@@ -2912,7 +2911,6 @@ void CodeGenFunction::EmitFunctionProlog(const CGFunctionInfo &FI,
         assert(STy->getNumElements() == NumIRArgs);
         for (unsigned i = 0, e = STy->getNumElements(); i != e; ++i) {
           auto AI = Fn->getArg(FirstIRArg + i);
-          llvm::errs() << "AM I coercing1?\n";
           AI->setName(Arg->getName() + ".coerce" + Twine(i));
           Address EltPtr = Builder.CreateStructGEP(AddrToStoreInto, i);
           Builder.CreateStore(AI, EltPtr);
@@ -2933,7 +2931,7 @@ void CodeGenFunction::EmitFunctionProlog(const CGFunctionInfo &FI,
         llvm::AttributeList Attrs = Fn->getAttributes();
         AI->setName(Arg->getName() + ".coerce");
         llvm::AttrBuilder AB;
-        AB.addAttribute("coerced", attr_name);
+        AB.addAttribute(attr_name.str(), attr_name);
         Attrs = Attrs.addAttributes(Fn->getContext(), llvm::AttributeList::FunctionIndex, AB);
         Fn->setAttributes(Attrs);
         CreateCoercedStore(AI, Ptr, /*DstIsVolatile=*/false, *this);
@@ -4989,7 +4987,6 @@ RValue CodeGenFunction::EmitCall(const CGFunctionInfo &CallInfo,
         // of the destination type to allow loading all of it. The bits past
         // the source value are left undef.
         if (SrcSize < DstSize) {
-          llvm::errs() << "AM I coercing4?\n";
           Address TempAlloca
             = CreateTempAlloca(STy, Src.getAlignment(),
                                Src.getName() + ".coerce");
