@@ -18063,8 +18063,14 @@ RValue CodeGenFunction::EmitBuiltinAlignTo(const CallExpr *E, bool AlignUp) {
     // value will not change the value.
     SrcForMask = Builder.CreateAdd(SrcForMask, Args.Mask, "over_boundary");
 
+
+    // Add metadata for malloc
+    auto MD = llvm::MDString::get(CGF.getLLVMContext(), "malloc_builtup");
+    llvm::MDNode* MDNode = llvm::MDNode::get(CGF.getLLVMContext(), MD);
+    std::vector<llvm::Metadata*> metadata_v;
+    metadata_v.push_back(MDNode);
+    ArrayRef<llvm::Metadata*> arr(metadata_v);
     SrcForMask->addMetadata_public("malloc_builtup", *llvm::MDNode::get(CGF.getLLVMContext(), arr));
-    llvm::errs() << "LAAAAAAAAAAAA\n";
   }
   // Invert the mask to only clear the lower bits.
   llvm::Value *InvertedMask = Builder.CreateNot(Args.Mask, "inverted_mask");
