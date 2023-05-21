@@ -2375,7 +2375,6 @@ void CodeGenFunction::emitAlignmentAssumption(llvm::Value *PtrValue,
                                               SourceLocation AssumptionLoc,
                                               llvm::Value *Alignment,
                                               llvm::Value *OffsetValue) {
-  llvm::errs() << "CAST_HERE\n";
   if (Alignment->getType() != IntPtrTy)
     Alignment =
         Builder.CreateIntCast(Alignment, IntPtrTy, false, "casted.align");

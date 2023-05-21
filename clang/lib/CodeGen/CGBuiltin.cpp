@@ -18076,6 +18076,7 @@ RValue CodeGenFunction::EmitBuiltinAlignTo(const CallExpr *E, bool AlignUp) {
     Result->setName("aligned_intptr");
     llvm::Value *Difference = Builder.CreateSub(Result, SrcAddr, "diff");
     if (E->getType()->isPointerType()) {
+      llvm::errs() << "GGGGGGGGGGGGGGGGGG\n";
       // The result must point to the same underlying allocation. This means we
       // can use an inbounds GEP to enable better optimization.
       Value *Base = EmitCastToVoidPtr(Args.Src);
@@ -18100,6 +18101,7 @@ RValue CodeGenFunction::EmitBuiltinAlignTo(const CallExpr *E, bool AlignUp) {
     // propagated to loads/stores, etc.
     emitAlignmentAssumption(Result, E, E->getExprLoc(), Args.Alignment);
   }
+  llvm::errs() << "TTTTTTTTTTTTTTTTTTTT\n";
   assert(Result->getType() == Args.SrcType);
   return RValue::get(Result);
 }
