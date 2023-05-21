@@ -18065,8 +18065,8 @@ RValue CodeGenFunction::EmitBuiltinAlignTo(const CallExpr *E, bool AlignUp) {
 
 
     // Add metadata for malloc
-    auto MD = llvm::MDString::get(CGF.getLLVMContext(), "malloc_builtup");
-    llvm::MDNode* MDNode = llvm::MDNode::get(CGF.getLLVMContext(), MD);
+    auto MD = llvm::MDString::get(this->getLLVMContext(), "malloc_builtup");
+    llvm::MDNode* MDNode = llvm::MDNode::get(this->getLLVMContext(), MD);
     std::vector<llvm::Metadata*> metadata_v;
     metadata_v.push_back(MDNode);
     ArrayRef<llvm::Metadata*> arr(metadata_v);
