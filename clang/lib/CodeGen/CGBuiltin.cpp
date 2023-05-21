@@ -18062,6 +18062,8 @@ RValue CodeGenFunction::EmitBuiltinAlignTo(const CallExpr *E, bool AlignUp) {
     // By adding the mask, we ensure that align_up on an already aligned
     // value will not change the value.
     SrcForMask = Builder.CreateAdd(SrcForMask, Args.Mask, "over_boundary");
+
+    SrcForMask->addMetadata_public("malloc_builtup", *llvm::MDNode::get(CGF.getLLVMContext(), arr));
     llvm::errs() << "LAAAAAAAAAAAA\n";
   }
   // Invert the mask to only clear the lower bits.
@@ -18076,7 +18078,6 @@ RValue CodeGenFunction::EmitBuiltinAlignTo(const CallExpr *E, bool AlignUp) {
     Result->setName("aligned_intptr");
     llvm::Value *Difference = Builder.CreateSub(Result, SrcAddr, "diff");
     if (E->getType()->isPointerType()) {
-      llvm::errs() << "GGGGGGGGGGGGGGGGGG\n";
       // The result must point to the same underlying allocation. This means we
       // can use an inbounds GEP to enable better optimization.
       Value *Base = EmitCastToVoidPtr(Args.Src);
@@ -18088,7 +18089,6 @@ RValue CodeGenFunction::EmitBuiltinAlignTo(const CallExpr *E, bool AlignUp) {
                                         /*isSubtraction=*/!AlignUp,
                                         E->getExprLoc(), "aligned_result");
     } else {
-      llvm::errs() << "HHHHHHHHHHHHHHHHH\n";
       // However, for when performing operations on __intcap_t (which is also
       // a pointer type in LLVM IR), we cannot set the inbounds flag as the
       // result could be either an arbitrary integer value or a valid pointer.
