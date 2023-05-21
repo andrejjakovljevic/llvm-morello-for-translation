@@ -18088,6 +18088,7 @@ RValue CodeGenFunction::EmitBuiltinAlignTo(const CallExpr *E, bool AlignUp) {
                                         /*isSubtraction=*/!AlignUp,
                                         E->getExprLoc(), "aligned_result");
     } else {
+      llvm::errs() << "HHHHHHHHHHHHHHHHH\n";
       // However, for when performing operations on __intcap_t (which is also
       // a pointer type in LLVM IR), we cannot set the inbounds flag as the
       // result could be either an arbitrary integer value or a valid pointer.
