@@ -18070,7 +18070,7 @@ RValue CodeGenFunction::EmitBuiltinAlignTo(const CallExpr *E, bool AlignUp) {
     std::vector<llvm::Metadata*> metadata_v;
     metadata_v.push_back(MDNode);
     ArrayRef<llvm::Metadata*> arr(metadata_v);
-    SrcForMask->addMetadata_public("malloc_builtup", *llvm::MDNode::get(CGF.getLLVMContext(), arr));
+    SrcForMask->addMetadata_public("malloc_builtup", *llvm::MDNode::get(this->getLLVMContext(), arr));
   }
   // Invert the mask to only clear the lower bits.
   llvm::Value *InvertedMask = Builder.CreateNot(Args.Mask, "inverted_mask");
