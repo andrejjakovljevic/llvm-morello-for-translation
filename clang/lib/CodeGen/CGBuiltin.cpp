@@ -4644,6 +4644,7 @@ RValue CodeGenFunction::EmitBuiltinExpr(const GlobalDecl GD, unsigned BuiltinID,
   case Builtin::BI__builtin_is_aligned:
     return EmitBuiltinIsAligned(E);
   case Builtin::BI__builtin_align_up:
+    llvm::errs() << "HERE\n" << "\n";
     return EmitBuiltinAlignTo(E, true);
   case Builtin::BI__builtin_align_down:
     return EmitBuiltinAlignTo(E, false);
