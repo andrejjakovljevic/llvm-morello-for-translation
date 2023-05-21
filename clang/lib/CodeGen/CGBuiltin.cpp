@@ -4644,7 +4644,7 @@ RValue CodeGenFunction::EmitBuiltinExpr(const GlobalDecl GD, unsigned BuiltinID,
   case Builtin::BI__builtin_is_aligned:
     return EmitBuiltinIsAligned(E);
   case Builtin::BI__builtin_align_up:
-    llvm::errs() << "HERE\n" << "\n";
+    llvm::errs() << "HERE\n";
     return EmitBuiltinAlignTo(E, true);
   case Builtin::BI__builtin_align_down:
     return EmitBuiltinAlignTo(E, false);
@@ -18062,6 +18062,7 @@ RValue CodeGenFunction::EmitBuiltinAlignTo(const CallExpr *E, bool AlignUp) {
     // By adding the mask, we ensure that align_up on an already aligned
     // value will not change the value.
     SrcForMask = Builder.CreateAdd(SrcForMask, Args.Mask, "over_boundary");
+    llvm::errs() << "LAAAAAAAAAAAA\n";
   }
   // Invert the mask to only clear the lower bits.
   llvm::Value *InvertedMask = Builder.CreateNot(Args.Mask, "inverted_mask");
