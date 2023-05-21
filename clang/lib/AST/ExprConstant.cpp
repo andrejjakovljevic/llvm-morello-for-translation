@@ -9081,6 +9081,7 @@ bool PointerExprEvaluator::VisitBuiltinCallExpr(const CallExpr *E,
   }
   case Builtin::BI__builtin_align_up:
   case Builtin::BI__builtin_align_down: {
+    llvm::errs() << "HERE\n" << "\n";
     if (!evaluatePointer(E->getArg(0), Result))
       return false;
     APSInt Alignment;
