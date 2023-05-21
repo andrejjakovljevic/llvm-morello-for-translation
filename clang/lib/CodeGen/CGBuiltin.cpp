@@ -18071,12 +18071,12 @@ RValue CodeGenFunction::EmitBuiltinAlignTo(const CallExpr *E, bool AlignUp) {
     metadata_v.push_back(MDNode);
     ArrayRef<llvm::Metadata*> arr(metadata_v);
     SrcForMask->addMetadata_public("malloc_builtup", *llvm::MDNode::get(this->getLLVMContext(), arr));
-    llvm::errs() << "I have added stuff\n";
   }
   // Invert the mask to only clear the lower bits.
   llvm::Value *InvertedMask = Builder.CreateNot(Args.Mask, "inverted_mask");
   llvm::Value *Result =
       Builder.CreateAnd(SrcForMask, InvertedMask, "aligned_result");
+  llvm::errs() << "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD\n";
   if (Args.Src->getType()->isPointerTy()) {
     /// TODO: Use ptrmask instead of ptrtoint+gep once it is optimized well.
     // Result = Builder.CreateIntrinsic(
